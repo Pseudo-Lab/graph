@@ -14,8 +14,8 @@
     </form> -->
 
     <ul id="menu" class="nav">
+        <li class="{% if page.url == '/about/' %} active {% endif %}"><a href="{{ base_path }}/about/">About</a></li>
+        <li class="{% if page.url == '/team/' %} active {% endif %}"><a href="{{ base_path }}/team/">Team</a></li>
         <li class="{% if page.url != '/about/' and page.url != '/team/' %} active {% endif %}"><a href="{{ base_path }}/">블로그</a></li>
-        <li class="{% if page.url == '/about/' %} active {% endif %}"><a href="{{ base_path }}/opensource/">About</a></li>
-        <li class="{% if page.url == '/team/' %} active {% endif %}"><a href="{{ base_path }}/openapi/">Team</a></li>
     </ul>
 </div><!-- #header -->
