@@ -2,7 +2,7 @@
 layout: post
 use_math: true
 
-title: 'The PageRank Citation Ranking Bringing Order to the Web'
+title: 'The PageRank Citation Ranking: Bringing Order to the Web'
 author: Sumin.Han
 tags: [pagerank]
 date: 2022-03-25 13:03
@@ -10,11 +10,11 @@ date: 2022-03-25 13:03
 
 ㅤ안녕하세요, 가짜연구소 Groovy Graph 팀의 한수민입니다. 이번 글에서는, PageRank 논문인 '[The PageRank Citation Ranking Bringing Order to the Web](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf)'을 정리해보도록 하겠습니다.
 
-<br>
-
 ㅤ이 글은 Reference 자료들을 참고하여 정리하였음을 먼저 밝힙니다. 혹시 내용중 잘못된 점이나 보완할 점 있다면 댓글로 알려주시면 감사하겠습니다. 그럼 시작하겠습니다.
 
 <!--more-->
+
+---
 
 ### 목차
 
@@ -31,7 +31,7 @@ date: 2022-03-25 13:03
     1. Simple PageRank의 계산
     1. Simple PageRank의 문제점
 1. ~~Simple~~ PageRank
-    1. Spider trap과 ********Dead end의 해결 방법
+    1. Spider trap과 Dead end의 해결 방법
     1. ~~Simple~~ PageRank 계산 예시
 1. PageRank의 결과
     1. Convergence Properties
@@ -40,19 +40,15 @@ date: 2022-03-25 13:03
     1. Perron-Frobenius theorem
 1. + 질문
 
-
 ---
 
 # 1 Reference
+
 - [CS224W 4. Link Analysis: PageRank](http://web.stanford.edu/class/cs224w/slides/04-pagerank.pdf)
 - [그래프와 추천 시스템](https://www.boostcourse.org/ai211)
 - [[Paper Review] The PageRank Citation Ranking: Bringing Order to the Web](https://youtu.be/2CWnZfBSj0Q)
 
-<br>
-
 ---
-
-<br>
 
 # 2 PageRank의 배경
 
@@ -62,31 +58,18 @@ date: 2022-03-25 13:03
         - 예를 들어, “운동화" 판매자가 자신의 페이지에, 자신의 “운동화" 판매와 상관 없는 내용들을 (e.g., 영화, 음악, ...), 보이지 않게 (바탕과 똑같은 색깔의 글씨로) 가득 적어놓으면, 검색 엔진은 “영화"를 키워드로 검색에도 “운동화" 판매 페이지를 보여줍니다.
 - 구글은, 검색 엔진의 품질을 향상시키기 위해, 웹 그래프 구조 (웹의 link structure)를 사용하는 **PageRank** 기술을 도입했습니다.
 
-<br>
-
 ---
-
-<br>
 
 # 3 PageRank 정의 & 개념
 
 ## 3.1 웹 그래프
 
 - 웹은 node는 웹페이지 이고, edge는 하이퍼링크인 **directed graph**로 표현할 수 있습니다.
-
 - 예를 들어, 아래의 그림처럼 표현할 수 있습니다.
-- (그림 출처: [CS224W 4. Link Analysis: PageRank](http://web.stanford.edu/class/cs224w/slides/04-pagerank.pdf))
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/23dab831-c3ad-4a60-94fa-9aca761b1e1e/Untitled.png)
-    
-    - 첫 번째 웹 페이지 (node)의 Networks는 하이퍼링크 (edge)를 포함하고 있습니다.
-    - 첫 번째 웹 페이지 (node)의 “Networks”와 같은 단어 (or 문장)을 **anchor text**라고 합니다.
-- (그림 출처: [The PageRank Citation Ranking: Bringing Order to the Web](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf) (PageRank 논문))
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9dc142d4-ed37-432f-b01a-616a4a353ea0/Untitled.png)
-    
 
-## 2.2 PageRank란?
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="(그림 출처: The PageRank Citation Ranking: Bringing Order to the Web)" width="100px">
+
+## 3.2 PageRank란?
 
 - 구하고 싶은, 웹 페이지의 점수 (중요성, 신뢰성)를 **rank**라고 하겠습니다.
 - PageRank (PR)는 검색 엔진의 결과에서, 웹 페이지들의 rank를 계산하는 데 사용하는 알고리즘입니다.
@@ -96,29 +79,28 @@ date: 2022-03-25 13:03
     - 참조가 많은 페이지는 참조가 적은 페이지보다 중요합니다.
     - 중요한 페이지가 참조한 페이지는 중요합니다.
 
-## 2.3 PageRank에 대한 직관
+## 3.3 PageRank에 대한 직관
 
-- (그림 출처: [Wikipedia - PageRank](https://en.wikipedia.org/wiki/PageRank))
+<img src="https://en.wikipedia.org/wiki/PageRank#/media/File:PageRanks-Example.svg" alt="(그림 출처: https://en.wikipedia.org/wiki/PageRank)" width="100px">
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5253232c-306c-495b-9f4e-86996ca9e0f7/Untitled.png)
-    
-    - **웹 페이지 (node) B**의 rank는 가장 높습니다.
-        - 다른 웹 페이지들로부터 투표를 많이 받았기 때문입니다.
-    - **웹 페이지 (node) C**의 rank는 2번째로 높습니다.
-        - 투표를 1개 밖에 받지 못했지만, rank가 가장 높은 B로부터 투표를 받았기 때문에, C의 rank도 높습니다.
-    - **보라색 페이지 (node)**들은 투표를 받지 못했지만, PageRank의 어떤 기법(teleport) 때문에, rank가 0이 아닙니다.
+- **웹 페이지 (node) B**의 rank는 가장 높습니다.
+    - 다른 웹 페이지들로부터 투표를 많이 받았기 때문입니다.
+- **웹 페이지 (node) C**의 rank는 2번째로 높습니다.
+    - 투표를 1개 밖에 받지 못했지만, rank가 가장 높은 B로부터 투표를 받았기 때문에, C의 rank도 높습니다.
+- **보라색 페이지 (node)**들은 투표를 받지 못했지만, PageRank의 어떤 기법(teleport) 때문에, rank가 0이 아닙니다.
 
-# 3 Simple PageRank
+---
 
-## 3.1 투표 (vote) 관점에서의 Simple PageRank
+# 4 Simple PageRank
+
+## 4.1 투표 (vote) 관점에서의 Simple PageRank
 
 - PageRank는 투표를 통해 중요한 웹 페이지를 찾습니다.
 - 이 때, 웹 페이지 (node)는 투표를 받는 대상이고, 투표는 하이퍼링크 (edge)를 통해 이루어집니다.
-    - 예를 들어,
-        - 아래의 그림에서, 페이지 (node) “I teach a class on Networks.” 는 하이퍼링크 (edge)를 통해 페이지 (node) “CS224W: Classes are in the Gates building”에 투표했다고 생각할 수 있습니다.
-        - (그림 출처: [CS224W 4. Link Analysis: PageRank](http://web.stanford.edu/class/cs224w/slides/04-pagerank.pdf))
-            
-            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8cb5c47c-09b2-41c4-bfc8-ff9b1f4cbf91/Untitled.png)
+
+- 예를 들어, 아래의 그림에서, 페이지 (node) “I teach a class on Networks.” 는 하이퍼링크 (edge)를 통해 페이지 (node) “CS224W: Classes are in the Gates building”에 투표했다고 생각할 수 있습니다.
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="100px">
             
 - 웹 페이지 A에 웹 페이지 B를 향한 하이퍼링크가 있다
     - == 웹 페이지 B는 웹 페이지 A로부터 backlink (in-edge, in-link)가 있다
@@ -135,27 +117,26 @@ date: 2022-03-25 13:03
 - 단순하게 backlink 수를 세지 않고, forward link 수로 나눈 후에 합산하는 이유는, 악성 웹 페이지들이 서로를 참조하여, backlink 수를 높게 만드는 조작을 하지 못하도록 하기 위함입니다.
 
 - 예를 들어, 아래 그림에서
-    - (그림 출처: [CS224W 4. Link Analysis: PageRank](http://web.stanford.edu/class/cs224w/slides/04-pagerank.pdf))
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="100px">
         
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1362f01e-209f-4c8e-b7a4-a7b04aa52ad9/Untitled.png)
-        
-    - 페이지 (node) $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
-    - 페이지 (node) $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
+- 페이지 (node) $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
+- 페이지 (node) $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
 
 - 각 웹 페이지의 rank를 정의는 다음과 같습니다.
     
-    $$
-    \displaystyle r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
-    $$
+$$
+r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
+$$
     
-    - $d_i$ :
-        - out-degree
-        - node $i$의 forward link (out-edge, out-link) 수
+- $d_i$ :
+    - out-degree
+    - node $i$의 forward link (out-edge, out-link) 수
 - PageRank를 통해 rank를 구하려는 것인데, 이 과정에서 rank를 사용한다는 것이 이상하게 들릴 수 있습니다.
     - 이것은 recursion (재귀)를 통해 풀이할 수 있습니다.
-    - 이 부분은 [3.4 Simple PageRank의 계산](https://www.notion.so/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web-59fc2bc5eefe45229ba152c4ff4ad39d)에서 다루도록 하겠습니다.
+    - 이 부분은 [4.4 Simple PageRank의 계산](https://www.notion.so/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web-59fc2bc5eefe45229ba152c4ff4ad39d)에서 다루도록 하겠습니다.
 
-## 3.2 ****random walk**** 관점에서의 Simple PageRank
+## 4.2 random walk 관점에서의 Simple PageRank
 
 - random walk를 통해, 웹을 서핑하는 웹 서퍼가 있다고 가정합시다.
 - random walk를 통해, 웹을 서핑하는 웹 서퍼의 행동은 다음과 같습니다.
@@ -167,9 +148,9 @@ date: 2022-03-25 13:03
 
 - $p (t)$로부터 $p (t+1)$을 계산할 수 있습니다.
     
-    $$
-    \displaystyle p_j (t+1) = \sum_{i \rightarrow j}^{} \bigg ( p_i(t) \times \frac{1}{d_i} \bigg ) = \sum_{i \rightarrow j}^{} \frac{p_i (t)}{d_i}
-    $$
+$$
+p_j (t+1) = \sum_{i \rightarrow j}^{} \bigg ( p_i(t) \times \frac{1}{d_i} \bigg ) = \sum_{i \rightarrow j}^{} \frac{p_i (t)}{d_i}
+$$
     
 
 - 웹 서퍼가 이 과정을 무한히 반복하고 나면, 즉 $t$가 무한히 커지면, 확률 분포 $p(t)$는 수렴하게 됩니다.
@@ -177,145 +158,134 @@ date: 2022-03-25 13:03
     - 수렴한 확률 분포 $p$는 stationary distribution (정상 분포) 이라고 부릅니다.
     - 이렇게 되면, 식을 다음과 같이 바꿀 수 있습니다.
         
-        $$
-        \displaystyle p_j (t+1) = \sum_{i \rightarrow j}^{} \frac{p_i (t)}{d_i} \quad\quad \Rightarrow \quad\quad p_j = \sum_{i \rightarrow j}^{} \frac{p_i}{d_i}
-        $$
+$$
+p_j (t+1) = \sum_{i \rightarrow j}^{} \frac{p_i (t)}{d_i} \quad\quad \Rightarrow \quad\quad p_j = \sum_{i \rightarrow j}^{} \frac{p_i}{d_i}
+$$
         
-
-## 3.3 Simple PageRank 관점 정리
+## 4.3 Simple PageRank 관점 정리
 
 - 투표 관점에서 정의한 rank
     - == random walk 관점에서의 stationary distribution
     - (== 논문 수식)
 
----
-
 - **투표 관점에서 정의한 rank**
     
-    $$
-    \displaystyle r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
-    $$
+$$
+r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
+$$
     
-    - $d_i$ :
-        - out-degree
-        - node $i$의 forward link (out-edge, out-link) 수
+- $d_i$ :
+    - out-degree
+    - node $i$의 forward link (out-edge, out-link) 수
 
 - **random walk 관점에서 정의한 stationary distribution**
     
-    $$
-    \displaystyle p_j = \sum_{i \rightarrow j}^{} \frac{p_i}{d_i}
-    $$
+$$
+p_j = \sum_{i \rightarrow j}^{} \frac{p_i}{d_i}
+$$
     
-
 - **논문 수식**
     
-    $$
-    \displaystyle R(u) = c \sum_{v \in B_u}^{} \frac{R(v)}{N_v}
-    $$
+$$
+R(u) = c \sum_{v \in B_u}^{} \frac{R(v)}{N_v}
+$$
     
-    - $u$: 웹 페이지
-    - $B_u$: 페이지 $u$를 가르키는 페이지의 집합
-    - $F_u$: 페이지 $u$가 가르키는 페이지의 집합
-    - $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
-    - $c$: normalization factor (모든 웹 페이지의 총 rank가 일정하도록)
+- $u$: 웹 페이지
+- $B_u$: 페이지 $u$를 가르키는 페이지의 집합
+- $F_u$: 페이지 $u$가 가르키는 페이지의 집합
+- $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
+- $c$: normalization factor (모든 웹 페이지의 총 rank가 일정하도록)
 
-## 3.4 Simple PageRank의 계산
+## 4.4 Simple PageRank의 계산
 
-### 3.4.2 Simple PageRank의 matrix formulation
+### 4.4.1 Simple PageRank의 matrix formulation
 
 - 결론부터 먼저 말하자면, PageRank 식은 다음과 같이 matrix로 나타낼 수 있습니다.
     
-    $$
-    r = M \cdot r
-    $$
+$$
+r = M \cdot r
+$$
     
-    - $r$ : rank 벡터
-    - $M$ : column stochastic adjacency matrix
+- $r$ : rank 벡터
+- $M$ : column stochastic adjacency matrix
         
-        $$
-        \displaystyle M_{u, v} = \begin{cases} \frac{1}{N_u}, & \text{if there is an edge from} \; v \; \text{to} \; u \\ 0, & \text{otherwise} \end{cases}
-        $$
+$$
+M_{u, v} = \begin{cases} \frac{1}{N_u}, & \text{if there is an edge from} \; v \; \text{to} \; u \\ 0, & \text{otherwise} \end{cases}
+$$
         
-        - $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
-        
+- $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
 
 ---
 
 - 예제를 통해서 자세히 알아보도록 하겠습니다.
 
-- (그림 출처: [CS224W 4. Link Analysis: PageRank](http://web.stanford.edu/class/cs224w/slides/04-pagerank.pdf))
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_04.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="100px">
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/390b4127-3863-4037-9ee0-e81060bf1b4c/Untitled.png)
+1. 각 페이지가 얻는 rank를 연립 방정식으로 표현해보겠습니다.
+    - $\displaystyle r_a = \frac{1}{2} r_a + \frac{1}{2} r_b$
+    - $\displaystyle r_b = \frac{1}{2} r_a + r_c$
+    - $\displaystyle r_c = \frac{1}{2} r_b$
+1. (1)의 연립 방정식을 matrix 형태로 나타내보겠습니다.
+    $$
+    \begin{bmatrix}
+    r_a \\
+    r_b \\ 
+    r_c \\
+    \end{bmatrix}
     
-    1. 각 페이지가 얻는 rank를 연립 방정식으로 표현해보겠습니다.
-        - $\displaystyle r_a = \frac{1}{2} r_a + \frac{1}{2} r_b$
-        - $\displaystyle r_b = \frac{1}{2} r_a + r_c$
-        - $\displaystyle r_c = \frac{1}{2} r_b$
-    2. (1)의 연립 방정식을 matrix 형태로 나타내보겠습니다.
-        
-        $$
-        \begin{bmatrix}
-        r_a \\
-        r_b \\ 
-        r_c \\
-        \end{bmatrix}
-        
-        = 
-        \begin{bmatrix}
-        \frac{1}{2} & \frac{1}{2} & 0\\
-        \frac{1}{2} & 0 & 1\\ 
-        0 & \frac{1}{2} & 0 \\
-        \end{bmatrix}
-        
-        \begin{bmatrix}
-        r_a \\
-        r_b \\ 
-        r_c \\
-        \end{bmatrix}
-        $$
-        
-    3. (2)의 matrix 식을 간단하게 $r = Mr$로 나타낼 수 있습니다. 
-        
-        $$
-        r = Mr
-        $$
-        
-        - 이 때, $M$은 column stochastic matrix입니다.
-            - column stochastic matrix는
-                - matrix의 모든 값들이 음수가 아니여야 합니다.
-                - 각 column의 합이 1입니다.
-            
-            $$
-            r = 
-            \begin{bmatrix}
-            r_a \\
-            r_b \\ 
-            r_c \\
-            \end{bmatrix}
-            ,
-            
-            \quad
-            
-            M
-            = 
-            \begin{bmatrix}
-            \frac{1}{2} & \frac{1}{2} & 0\\
-            \frac{1}{2} & 0 & 1\\ 
-            0 & \frac{1}{2} & 0 \\
-            \end{bmatrix}
-            $$
-            
+    = 
+    \begin{bmatrix}
+    \frac{1}{2} & \frac{1}{2} & 0\\
+    \frac{1}{2} & 0 & 1\\ 
+    0 & \frac{1}{2} & 0 \\
+    \end{bmatrix}
     
+    \begin{bmatrix}
+    r_a \\
+    r_b \\ 
+    r_c \\
+    \end{bmatrix}
+    $$
+1. (2)의 matrix 식을 간단하게 $r = Mr$로 나타낼 수 있습니다. 
+    
+    $$
+    r = Mr
+    $$
+    
+    - 이 때, $M$은 column stochastic matrix입니다.
+        - column stochastic matrix는
+            - matrix의 모든 값들이 음수가 아니여야 합니다.
+            - 각 column의 합이 1입니다.
+        
+    $$
+    r = 
+    \begin{bmatrix}
+    r_a \\
+    r_b \\ 
+    r_c \\
+    \end{bmatrix}
+    ,
+    
+    \quad
+    
+    M
+    = 
+    \begin{bmatrix}
+    \frac{1}{2} & \frac{1}{2} & 0\\
+    \frac{1}{2} & 0 & 1\\ 
+    0 & \frac{1}{2} & 0 \\
+    \end{bmatrix}
+    $$
 
-### 3.4.2 Simple PageRank의 eigenvector formulation
+### 4.4.2 Simple PageRank의 eigenvector formulation
 
 - $r = M \cdot r$ 식을 다시 쓰면,  $M \cdot r = 1 \cdot r$ 이 됩니다.
 - $M \cdot r = 1 \cdot r$ 식을 보면,
     - $M$의 eigenvalue가 1이고, eigenvector가 $r$이라고 할 수있습니다.
-    
+
 - eigenvector $r$을 구하기 위해, power iteration을 사용할 수 있습니다.
 
-### 3.4.3 Power Iteration
+### 4.4.3 Power Iteration
 
 - rank 계산에는 power iteration을 사용합니다.
 
@@ -328,9 +298,9 @@ date: 2022-03-25 13:03
     3. rank가 수렴하면 ($r^{(t)} \approx r^{(t+1)}$) 종료하고, 아니면 (2)로 돌아갑니다.
         - rank가 수렴하면, $r^{(t)} \approx r^{(t+1)}$을 rank 벡터로 사용합니다.
 
-## 3.5 Simple PageRank의 문제점
+## 4.5 Simple PageRank의 문제점
 
-### 3.5.1 power iteration은 수렴을 보장하나요? (****Spider trap 문제****)
+### 4.5.1 power iteration은 수렴을 보장하나요? (Spider trap 문제)
 
 - power iteration은 수렴을 보장하지 않습니다.
 
@@ -346,7 +316,7 @@ date: 2022-03-25 13:03
 
 - 해결 방법은 밑에서 알아보도록 하겠습니다.
 
-### 3.5.2 “합리적인" rank로 수렴하는 것을 보장하나요? 
+### 4.5.2 “합리적인" rank로 수렴하는 것을 보장하나요? 
 (Dead end, Dangling link, Dangling node 문제)
 
 - power iteration은 “합리적인" rank로의 수렴을 보장하지 않습니다.
@@ -383,7 +353,7 @@ date: 2022-03-25 13:03
 
 # 4 ~~Simple~~ PageRank
 
-## 4.1 ****Spider trap과**** Dead end의 해결 방법
+## 4.1 Spider trap과 Dead end의 해결 방법
 
 - spider trap과 dead end 문제를 해결하는 방법은 **teleport (순간 이동, 점프)** 입니다.
 
