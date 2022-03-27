@@ -67,7 +67,7 @@ date: 2022-03-25 13:03
 - 웹은 node는 웹페이지 이고, edge는 하이퍼링크인 **directed graph**로 표현할 수 있습니다.
 - 예를 들어, 아래의 그림처럼 표현할 수 있습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="(그림 출처: The PageRank Citation Ranking: Bringing Order to the Web)" width="100px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="(그림 출처: The PageRank Citation Ranking: Bringing Order to the Web)" width="200px">
 
 ## 3.2 PageRank란?
 
@@ -81,7 +81,7 @@ date: 2022-03-25 13:03
 
 ## 3.3 PageRank에 대한 직관
 
-<img src="https://en.wikipedia.org/wiki/PageRank#/media/File:PageRanks-Example.svg" alt="(그림 출처: https://en.wikipedia.org/wiki/PageRank)" width="100px">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="(그림 출처: https://en.wikipedia.org/wiki/PageRank)" width="200px">
     
 - **웹 페이지 (node) B**의 rank는 가장 높습니다.
     - 다른 웹 페이지들로부터 투표를 많이 받았기 때문입니다.
@@ -100,7 +100,7 @@ date: 2022-03-25 13:03
 
 - 예를 들어, 아래의 그림에서, 페이지 (node) “I teach a class on Networks.” 는 하이퍼링크 (edge)를 통해 페이지 (node) “CS224W: Classes are in the Gates building”에 투표했다고 생각할 수 있습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="100px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">
             
 - 웹 페이지 A에 웹 페이지 B를 향한 하이퍼링크가 있다
     - == 웹 페이지 B는 웹 페이지 A로부터 backlink (in-edge, in-link)가 있다
@@ -118,7 +118,7 @@ date: 2022-03-25 13:03
 
 - 예를 들어, 아래 그림에서
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="100px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">
         
 - 페이지 (node) $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
 - 페이지 (node) $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
