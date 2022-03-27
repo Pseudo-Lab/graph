@@ -19,6 +19,7 @@
 {% unless meta_image contains '://' %}
 {% assign meta_image = meta_image | prepend: site.url %}
 {% endunless %}
+<title>{{ meta_title }}</title>
 <meta name="title" content="{{ meta_title }}" />
 <meta name="author" content="{{ meta_author }}"/>
 <meta name="description" content="{{ meta_description }}"/>
