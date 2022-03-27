@@ -81,7 +81,7 @@ date: 2022-03-25 13:03
 
 ## 3.3 PageRank에 대한 직관
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="(그림 출처: https://en.wikipedia.org/wiki/PageRank)" width="200px">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="(그림 출처: Wikipedia - PageRank)" style="width:400px">
     
 - **웹 페이지 (node) B**의 rank는 가장 높습니다.
     - 다른 웹 페이지들로부터 투표를 많이 받았기 때문입니다.
