@@ -82,7 +82,7 @@
         $('#post-content > p > img[alt]').replaceWith(function () {
             return '<figure>'
                 + '<a href="' + $(this).attr('src') + '" class="mg-link">'
-                + '<img src="' + $(this).attr('src') + '"/></a>'
+                + '<img src="' + $(this).attr('src') + '" width="' + $(this).attr('width') + '"/></a>'
                 + '<figcaption class="caption">' + $(this).attr('alt') + '</figcaption>'
                 + '</figure>';
         });
