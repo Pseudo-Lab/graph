@@ -929,6 +929,10 @@ body.tag-template #navbar {
     text-decoration-color: #e6e6e6;
 }
 
+#post-content a:hover {
+    font-weight: 700;
+}
+
 #post-content > *:first-child {
     margin: 0;
 }
