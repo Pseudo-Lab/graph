@@ -15,6 +15,7 @@ layout: null
     
     {% for page in site.pages %}
         {% if page.title != nil and page.title != 'Tags' %}
+,
             {
                 "title"    : "{{ page.title | escape }}",
                 "category" : "{{ page.category }}",
