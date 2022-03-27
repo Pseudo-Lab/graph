@@ -1,10 +1,11 @@
 ---
 layout: post
+use_math: true
+
 title: 'The PageRank Citation Ranking Bringing Order to the Web'
 author: Sumin.Han
-date: 2022-03-25 13:03
 tags: [pagerank]
-use_math: true
+date: 2022-03-25 13:03
 ---
 
 ㅤ안녕하세요, 가짜연구소 Groovy Graph 팀의 한수민입니다. 이번 글에서는, PageRank 논문인 '[The PageRank Citation Ranking Bringing Order to the Web](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf)'을 정리해보도록 하겠습니다.
@@ -67,9 +68,9 @@ use_math: true
 
 <br>
 
-# 2 PageRank 정의 & 개념
+# 3 PageRank 정의 & 개념
 
-## 2.1 웹 그래프
+## 3.1 웹 그래프
 
 - 웹은 node는 웹페이지 이고, edge는 하이퍼링크인 **directed graph**로 표현할 수 있습니다.
 

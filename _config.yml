@@ -8,7 +8,7 @@ timezone: Asia/Seoul
 
 repository: teamgrgr/teamgrgr.github.io
 
-permalink: /:title/
+permalink: /blog/:title/
 
 excerpt_separator: <!--more-->
 
