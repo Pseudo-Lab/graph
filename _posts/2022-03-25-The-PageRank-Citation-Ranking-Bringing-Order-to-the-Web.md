@@ -67,7 +67,7 @@ date: 2022-03-25 13:03
     - node: 웹 페이지
     - edge: 하이퍼링크
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (그림 출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="300px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="300px">
 
 ## 3.2 PageRank란?
 
@@ -89,7 +89,7 @@ date: 2022-03-25 13:03
         - C는 참조가 1번 밖에 안 됐지만, rank가 가장 높은 B가 참조하고 있기 때문에, C의 rank도 높습니다.
     - **보라색 페이지**들은 참조가 없지만, PageRank의 어떤 기법(teleport) 때문에, rank가 0이 아닙니다.
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="그림 2 (그림 출처: Wikipedia - PageRank)" width="400px">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="그림 2 (출처: Wikipedia - PageRank)" width="400px">
 
 ---
 
@@ -101,7 +101,7 @@ date: 2022-03-25 13:03
 - 이 때, 웹 페이지 (node)는 투표를 받는 대상이고, 투표는 하이퍼링크 (edge)를 통해 이루어집니다.
     - (e.g.) 그림 3에서, “I teach a class on Networks.” 페이지는 하이퍼링크를 통해 “CS224W: Classes are in the Gates building” 페이지에 투표했다고 생각할 수 있습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="300px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (출처: CS224W 4. Link Analysis: PageRank)" width="300px">
 
 <p></p>
 
@@ -123,17 +123,16 @@ date: 2022-03-25 13:03
         - 보통, 맨 처음에는 모두 같은 투표 점수를 갖고 있습니다.
         - 우리는 중요하고, 신뢰가 가는 페이지가 다른 페이지들보다 투표 점수(rank)가 높기를 바랍니다.
     1. 웹 페이지는 자신이 갖고 있는 투표 점수를, 투표하려는 웹 페이지에게 똑같이 나누어서 투표합니다. 
-        - == 자신이 갖고 있는 투표 점수를, 투표하려는 웹 페이지 수로 나누어, 나눠진 점수가 씌여진 종이를, 투표하려는 웹 페이지에게 보냅니다.
-        - == 투표 점수를 out-degree로 나누어 각 웹 페이지에 투표합니다. 
+        - == 자신이 갖고 있는 투표 점수를, out-degree로 나누어, 나눠진 점수가 씌여진 종이를, out-edge가 향하는 웹 페이지에게 보냅니다.
     1. 투표가 끝난 뒤, 각 웹 페이지는 자신이 받은 투표 점수을 모두 더하여, 자신의 새로운 투표 점수를 계산합니다.
 
 <p></p>
 
 - (e.g.) 투표 점수 계산 방법 (그림 4)
-    - 페이지 $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
-    - 페이지 $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
+    - 페이지 $j$는, 자신의 투표 점수 (rank) $r_j$를 out-degree 수로 나눈 $\displaystyle \frac{r_j}{3}$를, out-edge가 가리키는 페이지에게 보냅니다.
+    - 페이지 $j$의 새로운 투표 점수 (rank)는, in-edge를 통해 받은 투표 점수들의 합이므로, $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 가 됩니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
 
 <p></p>
 
@@ -177,7 +176,7 @@ $$
 
 - 웹 서퍼가 이 과정을 무한히 반복하고 나면, 즉 $t$가 무한히 커지면, 확률 분포 $p(t)$는 수렴하게 됩니다.
     - 다시 말하면,  $p(t) = p(t+1) = p$ 가 성립하게 됩니다.
-    - 수렴한 확률 분포 $p$는 stationary distribution (정상 분포) 이라고 부릅니다.
+    - 수렴한 확률 분포 $p$는 stationary distribution이라고 부릅니다.
     - 이렇게 되면, 식을 다음과 같이 바꿀 수 있습니다.
         
 $$
@@ -210,22 +209,21 @@ $$
 <p></p>
 
 - **논문 수식**
-    
+    - $u$: 웹 페이지
+    - $B_u$: 페이지 $u$를 가르키는 페이지의 집합
+    - $F_u$: 페이지 $u$가 가르키는 페이지의 집합
+    - $N_u = \|F_u\|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
+    - $c$: normalization factor (모든 웹 페이지의 총 rank가 일정하도록)
+
 $$
 R(u) = c \sum_{v \in B_u}^{} \frac{R(v)}{N_v}
 $$
-    
-- $u$: 웹 페이지
-- $B_u$: 페이지 $u$를 가르키는 페이지의 집합
-- $F_u$: 페이지 $u$가 가르키는 페이지의 집합
-- $N_u = \|F_u\|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
-- $c$: normalization factor (모든 웹 페이지의 총 rank가 일정하도록)
 
 ## 4.4 Simple PageRank의 계산
 
 ### 4.4.1 Simple PageRank의 matrix formulation
 
-- 결론부터 먼저 말하자면, PageRank 식은 다음과 같이 matrix로 나타낼 수 있습니다.
+- PageRank 식은 다음과 같이 matrix 형태로 나타낼 수 있습니다.
     
 $$
 r = M \cdot r
@@ -233,7 +231,7 @@ $$
     
 - $r$ : rank 벡터
 - $M$ : column stochastic adjacency matrix
-    - $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
+    - $N_u = \|F_u\|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
         
 $$
 M_{u, v} = \begin{cases} \frac{1}{N_u}, & \text{if there is an edge from} \; v \; \text{to} \; u \\ 0, & \text{otherwise} \end{cases}
@@ -243,7 +241,7 @@ $$
 
 - 예제를 통해서 자세히 알아보도록 하겠습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_04.png" alt="그림 5 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="250px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_04.png" alt="그림 5 (출처: CS224W 4. Link Analysis: PageRank)" width="250px">
     
 1. 각 페이지가 얻는 rank를 연립 방정식으로 표현해보겠습니다.
     - $\displaystyle r_a = \frac{1}{2} r_a + \frac{1}{2} r_b$
@@ -251,35 +249,30 @@ $$
     - $\displaystyle r_c = \frac{1}{2} r_b$
 1. (1)의 연립 방정식을 matrix 형태로 나타내보겠습니다.
 
-$$
-\begin{bmatrix}
-r_a \\
-r_b \\ 
-r_c \\
-\end{bmatrix}
-= 
-\begin{bmatrix}
-\frac{1}{2} & \frac{1}{2} & 0\\
-\frac{1}{2} & 0 & 1\\ 
-0 & \frac{1}{2} & 0 \\
-\end{bmatrix}
-\begin{bmatrix}
-r_a \\
-r_b \\ 
-r_c \\
-\end{bmatrix}
-$$
+    $$
+    \begin{bmatrix}
+    r_a \\
+    r_b \\ 
+    r_c \\
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    \frac{1}{2} & \frac{1}{2} & 0\\
+    \frac{1}{2} & 0 & 1\\ 
+    0 & \frac{1}{2} & 0 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+    r_a \\
+    r_b \\ 
+    r_c \\
+    \end{bmatrix}
+    $$
 
-1. (2)의 matrix 식을 간단하게 $r = Mr$로 나타낼 수 있습니다. 
-    
-$$
-r = Mr
-$$
-    
-- 이 때, $M$은 column stochastic matrix입니다.
-    - column stochastic matrix는
-        - matrix의 모든 값들이 음수가 아니여야 합니다.
-        - 각 column의 합이 1입니다.
+1. (2)의 matrix 식을 간단하게 $r = Mr$로 나타낼 수 있습니다.     
+    - 이 때, $M$은 column stochastic matrix입니다.
+        - column stochastic matrix는
+            - matrix의 모든 값들이 음수가 아니여야 합니다.
+            - 각 column의 합이 1입니다.
 
 $$
 r = 
@@ -332,39 +325,37 @@ $$
 
 - power iteration은 수렴을 보장하지 않습니다.
 
+<p></p>
+
 - **spider trap**은 들어오는 edge는 있지만, 나가는 edge는 없는 **node 집합**을 말합니다.
 - spider trap에 의해서 power iteration은 수렴하지 않는 문제가 발생합니다.
 
-- 아래와 같은 그림일 경우, power iteration은 수렴하지 않습니다.
+<p></p>
+
+- (e.g.) spider trap 문제가 발생하는 경우 (그림 6)
     - iteration 1과 iteration 4의 rank는 동일합니다. 따라서, rank가 수렴하지 않고, 무한히 반복됩니다.
-    - (그림 출처: [The PageRank Citation Ranking: Bringing Order to the Web](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf) (PageRank 논문))
-        
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/53971030-8753-4ca8-9679-05d44a81f6af/Untitled.png)
-        
 
-- 해결 방법은 밑에서 알아보도록 하겠습니다.
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_05.png" alt="그림 6 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="250px">
 
-### 4.5.2 “합리적인" rank로 수렴하는 것을 보장하나요? 
-(Dead end, Dangling link, Dangling node 문제)
+<p></p>
+
+- 해결 방법은 아래에서 알아보도록 하겠습니다.
+
+### 4.5.2 “합리적인" rank로 수렴하는 것을 보장하나요? (Dead end, Dangling link 문제)
 
 - power iteration은 “합리적인" rank로의 수렴을 보장하지 않습니다.
-    
-    $$
-    r = M \cdot r
-    $$
-    
 
-- 아래와 같은 그림일 경우, power iteration은 합리적인 rank로 수렴하지 않습니다.
-    - (그림 출처: [CS224W 4. Link Analysis: PageRank](http://web.stanford.edu/class/cs224w/slides/04-pagerank.pdf))
-    - 모든 node의 rank가 모두 0으로 수렴합니다.
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8c7e63f3-038d-43dc-9d1f-589690148bdc/Untitled.png)
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fe2512c3-361d-4a69-8152-42ca26677908/Untitled.png)
-    
+<p></p>
 
 - **dead end**는 들어오는 edge는 있지만, 나가는 edge는 없는 **node**를 말합니다.
 - dead end에 의해서 power iteration이 합리적인 rank로 수렴하지 않는 문제가 발생합니다.
+
+<p></p>
+
+- (e.g.) dead end 문제가 발생하는 경우 (그림 7)
+    - 모든 node의 rank가 모두 0으로 수렴합니다.
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_06.png" alt="그림 7 (출처: CS224W 4. Link Analysis: PageRank)" width="250px">
 
 - 해결 방법은 밑에서 알아보도록 하겠습니다.
 
@@ -374,16 +365,17 @@ $$
 - 논문의 **2.7 Dangling Links**을 보면, 다음과 같이 나와있습니다.
     
     > dangling links는 다른 페이지의 rank에 직접적인 영향을 미치지 않기 때문에, 모든 PageRank가 계산될 때까지 시스템에서 dangling links를 제거하기만 하면 됩니다.
-    > 
-    
     > 제거된 dangling links와 같은 페이지에 있는 다른 edge의 normalization은 약간 변하지만, 큰 영향은 없을 것입니다.
-    > 
 
-# 4 ~~Simple~~ PageRank
+---
 
-## 4.1 Spider trap과 Dead end의 해결 방법
+# 5 ~~Simple~~ PageRank
+
+## 5.1 Spider trap과 Dead end의 해결 방법
 
 - spider trap과 dead end 문제를 해결하는 방법은 **teleport (순간 이동, 점프)** 입니다.
+
+<p></p>
 
 - random walk 관점에서, 웹을 서핑하는 웹 서퍼의 행동을 다음과 같이 수정합니다.
     1. 현재 웹 페이지에 하이퍼링크가 없다면, 랜덤한 웹 페이지로 teleport 합니다.
@@ -391,7 +383,9 @@ $$
         - $\alpha$의 확률로, 하이퍼링크 중 하나를 uniform한 확률로 선택해 이동합니다.
         - $(1 - \alpha)$의 확률로, 랜덤한 웹 페이지로 teleport 합니다.
 
-- teleport를 하는 경우엔, teleport 할 random한 웹 페이지는 전체 웹 페이지들 중에 하나를 uniform 확률로 선택합니다
+<p></p>
+
+- teleport를 하는 경우엔, teleport 할 random한 웹 페이지는 전체 웹 페이지들 중에 하나를 uniform한 확률로 선택합니다.
 - teleport에 의해서, spider trap이나 dead end에 갇히는 일이 없어집니다.
 - $\alpha$를 damping factor라고 부르며, $[0.8,\; 0.9]$ 정도를 사용합니다.
 
@@ -399,47 +393,50 @@ $$
 
 - teleport를 도입함으로써, rank의 계산 식은 아래와 같이 바뀌게 됩니다.
 
+<p></p>
+
 - **simple PageRank의 식**
     
-    $$
-    \displaystyle r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
-    $$
-    
+$$
+r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
+$$
 
-- **새로운 PageRank의 식**
+<p></p>
+
+- **~~simple~~ PageRank의 식**
     - $N$은 총 웹 페이지 (node)의 수를 의미합니다.
     
     $$
     \displaystyle r_j = \sum_{i \rightarrow j}^{} \bigg( \alpha \frac{r_i}{d_i} \bigg) + (1-\alpha) \frac{1}{N}
     $$
     
-    - 식 $\displaystyle \sum_{i \rightarrow j}^{} \bigg( \alpha \frac{r_i}{d_i} \bigg)$은 하이퍼링크를 따라 node $j$에 도착할 확률을 의미합니다.
-    - 식 $\displaystyle (1-\alpha) \frac{1}{N}$은 teleport를 통해 node $j$에 도착할 확률을 의미합니다.
+    - 식 $\displaystyle \sum_{i \rightarrow j}^{} \bigg( \alpha \frac{r_i}{d_i} \bigg)$ 는 하이퍼링크를 따라 node $j$에 도착할 확률을 의미합니다.
+    - 식 $\displaystyle (1-\alpha) \frac{1}{N}$ 은 teleport를 통해 node $j$에 도착할 확률을 의미합니다.
 
 ## 4.2 ~~Simple~~ PageRank 계산 예시
 
-- 다음과 같은 웹 그래프가 있을 때, PageRank를 계산하는 방법에 대해 알아보겠습니다.
+- 그림 8과 같은 웹 그래프가 있을 때, PageRank를 계산하는 방법에 대해 알아보겠습니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/407f173d-46ca-4bfd-9d0e-df0eaf9b80fc/Untitled.png)
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_07.png" alt="그림 8" width="250px">
 
 ### 1. adjacency matrix $A$ 구하기
 
 - 웹 그래프의 adjacency matrix $A$ 를 구합니다.
 - $A$는 row node에서 column node로 가는 edge가 있으면 1, 없으면 0 입니다.
 
----
+<p></p>
 
-- 예시
+- (e.g.)
     
-    $$
-    A = 
-    \begin{bmatrix}
-    0 & 1 & 0 & 1 \\
-    0 & 0 & 1 & 0 \\
-    0 & 1 & 0 & 0 \\
-    0 & 0 & 0 & 0 \\
-    \end{bmatrix}
-    $$
+$$
+A = 
+\begin{bmatrix}
+0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+\end{bmatrix}
+$$
     
 
 ### 2. $A$를 transpose한 matrix $A^T$ 구하기
@@ -447,39 +444,38 @@ $$
 - adjacency matrix $A$를 transpose한 matrix $A^T$ 구합니다.
 - $A^T$는 column node에서 row node로 가는 edge가 있으면 1, 없으면 0 입니다.
 
----
+<p></p>
 
-- 예시
+- (e.g.)
     
-    $$
-    A^T = 
-    \begin{bmatrix}
-    0 & 0 & 0 & \red0 \\
-    1 & 0 & 1 & \red0 \\
-    0 & 1 & 0 & \red0 \\
-    1 & 0 & 0 & \red0 \\
-    \end{bmatrix}
-    $$
-    
+$$
+A^T = 
+\begin{bmatrix}
+0 & 0 & 0 & \color{red}{0} \\
+1 & 0 & 1 & \color{red}{0} \\
+0 & 1 & 0 & \color{red}{0} \\
+1 & 0 & 0 & \color{red}{0} \\
+\end{bmatrix}
+$$
 
 ### 3. hyperlink matrix $H$ 구하기
 
 - adjacency matrix인 $A$를 hyperlink matrix $H$로 변환합니다.
 - $A$의 값들을, column별로, column의 합으로 나눕니다.
 
----
+<p></p>
 
-- 예시
+- (e.g.)
     
-    $$
-    H = 
-    \begin{bmatrix}
-    0 & 0 & 0 & \red0 \\
-    \frac{1}{2} & 0 & 1 & \red0 \\
-    0 & 1 & 0 & \red0 \\
-    \frac{1}{2} & 0 & 0 & \red0 
-    \end{bmatrix}
-    $$
+$$
+H = 
+\begin{bmatrix}
+0 & 0 & 0 & \red0 \\
+\frac{1}{2} & 0 & 1 & \red0 \\
+0 & 1 & 0 & \red0 \\
+\frac{1}{2} & 0 & 0 & \red0 
+\end{bmatrix}
+$$
     
 
 ### 4. column stochastic matrix인 $M$ 구하기
@@ -491,20 +487,20 @@ $$
     - 각 column의 합이 1입니다.
 - column stochastic matrix를 만들어줌으로, dead end 문제가 해결됩니다.
 
----
+<p></p>
 
-- 예시
+- (e.g.)
     
-    $$
-    M = 
-    
-    \begin{bmatrix}
-    0 & 0 & 0 & \red{\frac{1}{4}} \\
-    \frac{1}{2} & 0 & 1 & \red{\frac{1}{4}} \\
-    0 & 1 & 0 & \red{\frac{1}{4}} \\
-    \frac{1}{2} & 0 & 0 & \red{\frac{1}{4}}
-    \end{bmatrix}
-    $$
+$$
+M = 
+
+\begin{bmatrix}
+0 & 0 & 0 & \red{\frac{1}{4}} \\
+\frac{1}{2} & 0 & 1 & \red{\frac{1}{4}} \\
+0 & 1 & 0 & \red{\frac{1}{4}} \\
+\frac{1}{2} & 0 & 0 & \red{\frac{1}{4}}
+\end{bmatrix}
+$$
     
 
 ### 5. Google matrix $G$ 구하기
@@ -513,45 +509,45 @@ $$
 - spider trap 문제는 랜덤 서퍼 개념을 도입함으로써 해결됩니다.
 - $\alpha$는 보통  $[0.8,\; 0.9]$ 정도를 사용합니다.
 
----
+<p></p>
 
-- 예시
+- (e.g.)
     
-    $$
-    G = 
+$$
+G = 
+
+\alpha
+
+\begin{bmatrix}
+0 & 0 & 0 & {\frac{1}{4}} \\
+\frac{1}{2} & 0 & 1 & {\frac{1}{4}} \\
+0 & 1 & 0 & {\frac{1}{4}} \\
+\frac{1}{2} & 0 & 0 & {\frac{1}{4}}
+\end{bmatrix}
+
++
+
+(1-\alpha)
+\begin{bmatrix}
+\frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+\frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+\frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+\frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4}
+\end{bmatrix}
+$$
     
-    \alpha
-    
-    \begin{bmatrix}
-    0 & 0 & 0 & {\frac{1}{4}} \\
-    \frac{1}{2} & 0 & 1 & {\frac{1}{4}} \\
-    0 & 1 & 0 & {\frac{1}{4}} \\
-    \frac{1}{2} & 0 & 0 & {\frac{1}{4}}
-    \end{bmatrix}
-    
-    +
-    
-    (1-\alpha)
-    \begin{bmatrix}
-    \frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
-    \frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
-    \frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
-    \frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4}
-    \end{bmatrix}
-    $$
-    
-    - $\beta = 0.8$이라고 하면, $G$는 다음과 같습니다.
+- $\alpha = 0.8$이라고 하면, $G$는 다음과 같습니다.
         
-        $$
-        G = 
-        
-        \begin{bmatrix}
-        0.05 & 0.05 & 0.05 & 0.25 \\
-        0.45 & 0.05 & 0.85 & 0.25 \\
-        0.05 & 0.85 & 0.05 & 0.25 \\
-        0.45 & 0.05 & 0.05 & 0.25
-        \end{bmatrix}
-        $$
+$$
+G = 
+
+\begin{bmatrix}
+0.05 & 0.05 & 0.05 & 0.25 \\
+0.45 & 0.05 & 0.85 & 0.25 \\
+0.05 & 0.85 & 0.05 & 0.25 \\
+0.45 & 0.05 & 0.05 & 0.25
+\end{bmatrix}
+$$
         
 
 ### 5. rank 벡터 $r$ 구하기
@@ -559,94 +555,92 @@ $$
 - rank 벡터와 Google matrix $G$ 를 곱하여, rank를 구합니다.
 - power iteration을 이용하여, 다음 식을 풀어, 최종 rank 벡터를 구합니다.
     
-    $$
-    r = G \cdot r
-    $$
+$$
+r = G \cdot r
+$$
+
+<p></p>
+
+- (e.g.)
     
+$$
+r 
+\approx 
+
+\begin{bmatrix}
+0.07 \\
+0.42 \\
+0.41 \\
+0.10
+\end{bmatrix}
+$$
 
 ---
 
-- 예시
-    
-    $$
-    r 
-    
-    \approx 
-    
-    \begin{bmatrix}
-    0.07 \\
-    0.42 \\
-    0.41 \\
-    0.10
-    \end{bmatrix}
-    
-    $$
-    
+# 6 PageRank의 결과
 
-# 5 PageRank의 결과
+## 6.1 Convergence Properties
 
-## 5.1 Convergence Properties
-
-- (그림 출처: [The PageRank Citation Ranking: Bringing Order to the Web](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf) (PageRank 논문))
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3409d3f1-9d91-4d96-a4ef-d7d9d7da13d1/Untitled.png)
-    
+- 그림 9
     - 3억 2200만 개의 edge → 52번의 iteration을 통해 수렴
     - 1억 6100만 개의 edge → 45번의 iteration을 통해 수렴
 - PageRank가 매우 큰 데이터에서도 매우 잘 확장될 것임을 시사합니다.
 
----
 
-# +6 PageRank를 이해하는 데 필요한 수학
-
-## 6.1 Stochastic matrix
-
-- stochastic matrix $A$는 항상 eigenvalue $1$을 갖습니다. 그리고 다른 모든 eigenvalue들은 절대값이 1보다 작거나 1과 같습니다.
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_08.png" alt="그림 9 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="250px">
 
 ---
+
+# +7 PageRank를 이해하는 데 필요한 수학
+
+## 7.1 Stochastic matrix
+
+> stochastic matrix $A$는 항상 eigenvalue $1$을 갖습니다. 그리고 다른 모든 eigenvalue들은 절대값이 1보다 작거나 1과 같습니다.
+
+### 7.1.1 증명
 
 - column stochastic matrix $A$가 있습니다.
 - row stochastic matrix $A^{\text{T}}$가 있습니다.
 - row stochastic matrix $A^{\text{T}}$는
     - $A^{\text{T}} \textbf{x} = \lambda \textbf{x}$ 식을 만족하는, eigenvalue $\lambda=1$과 eigenvector $\textbf{x} = \begin{bmatrix} 1 \; 1 \; 1 \; \cdots \;1\end{bmatrix}^{\text{T}}$ 를 갖습니다.
-        
-        $$
-        \begin{bmatrix} 
-        a_{11} & a_{12} & \dots &   a_{1n} \\ 
-        a_{21} &a_{22} &  \dots & a_{2n}  \\ 
-        \vdots & \vdots & \dots & \vdots \\ 
-        a_{n1} & a_{n2} & \dots & a_{nn} \end{bmatrix} 
-        
-        \begin{bmatrix} 
-        1 \\ 
-        1 \\ 
-        \vdots \\ 
-        1 
-        \end{bmatrix} 
-        
-        = 
-        
-        \begin{bmatrix} 
-        a_{11}+a_{12}+\cdots+a_{1n} \\ 
-        a_{21}+a_{22}+\cdots+a_{2n} \\ 
-        \vdots \\ 
-        a_{n1}+a_{n2}\cdots+a_{nn} 
-        \end{bmatrix} 
-        
-        = 1\cdot 
-        \begin{bmatrix} 
-        1 \\ 
-        1 \\ 
-        \vdots \\ 
-        1 
-        \end{bmatrix}
-        $$
+
+$$
+\begin{bmatrix} 
+a_{11} & a_{12} & \dots &   a_{1n} \\ 
+a_{21} &a_{22} &  \dots & a_{2n}  \\ 
+\vdots & \vdots & \dots & \vdots \\ 
+a_{n1} & a_{n2} & \dots & a_{nn} \end{bmatrix} 
+
+\begin{bmatrix} 
+1 \\ 
+1 \\ 
+\vdots \\ 
+1 
+\end{bmatrix} 
+
+= 
+
+\begin{bmatrix} 
+a_{11}+a_{12}+\cdots+a_{1n} \\ 
+a_{21}+a_{22}+\cdots+a_{2n} \\ 
+\vdots \\ 
+a_{n1}+a_{n2}\cdots+a_{nn} 
+\end{bmatrix} 
+
+= 1\cdot 
+\begin{bmatrix} 
+1 \\ 
+1 \\ 
+\vdots \\ 
+1 
+\end{bmatrix}
+$$
         
 - $A$와 $A^{\text{T}}$는 같은 eigenvalue를 갖기 때문에, column stochastic matrix $A$도 eigenvalue  $\lambda=1$을 갖습니다.
 
 ---
 
-- 이제 $A$ 에 대하여, eigenvalue가 $| \lambda | > 1$이고, eigenvector $\textbf{v}$라고 해봅시다.
+- 이제 $A$ 에 대하여, eigenvalue가 $\| \lambda \| > 1$이고, eigenvector $\textbf{v}$라고 해봅시다.
     - 그렇다면 $A \textbf{v} = \lambda \textbf{v}$ 입니다.
 - $A \textbf{v} = \lambda \textbf{v}$ 의 $i$번 째 row를 뽑아보면, 다음과 같습니다.
     - $a_{i1}v_1+a_{i2}v_2+\cdots+a_{in}v_n=\lambda v_i$
@@ -675,10 +669,10 @@ $$
         \end{bmatrix} 
         $$
         
-- $|v_k| = \max\{|v_1|, \; |v_2|, \; \dots , \; |v_n|\}$ 라고 합시다.
-    - $|v_k|$는 $\textbf{v}$의 entries에 절대값을 씌었을 때, 가장 큰 값입니다.
-    - $|v_k| > 0$ 입니다.
-        - 절대값인 $|v_k| \leq 0$ 이려면, $|v_k| = 0$ 이 되고, $\textbf{v} = \textbf{0}$이 됩니다. 이렇게 되면, eigenvector가 영벡터가 아니여야 한다는 가정에 모순이 됩니다.
+- $\|v_k\| = \max\{\|v_1\|, \; \|v_2\|, \; \dots , \; \|v_n\|\}$ 라고 합시다.
+    - $\|v_k\|$는 $\textbf{v}$의 entries에 절대값을 씌었을 때, 가장 큰 값입니다.
+    - $\|v_k\| > 0$ 입니다.
+        - 절대값인 $\|v_k\| \leq 0$ 이려면, $\|v_k\| = 0$ 이 되고, $\textbf{v} = \textbf{0}$이 됩니다. 이렇게 되면, eigenvector가 영벡터가 아니여야 한다는 가정에 모순이 됩니다.
 - $A \textbf{v} = \lambda \textbf{v}$ 의 $k$번 째 row를 뽑아서 풀어보도록 하겠습니다.
     
     $$
@@ -694,9 +688,8 @@ $$
     $$
     \therefore \quad |\lambda| \; \leq \; 1
     $$
-    
 
-## 6.2 Perron-Frobenius theorem
+## 7.2 Perron-Frobenius theorem
 
 - Perron-Frobenius theorem
     - $n \times n$ 행렬 $A$의 모든 entries가 양수이면,
@@ -705,14 +698,10 @@ $$
 
 ---
 
-(증명을 이해 못했습니다ㅠㅠ)❓❓
+# +8 질문
 
-# +7 질문
-
-## 7.1 구글은 지금도 PageRank를 사용할까?
+## 8.1 구글은 지금도 PageRank를 사용할까?
 
 - PageRank 논문은 1998년에 나왔지만, 구글은 현재도 검색 엔진의 품질 향상을 위해 PageRank를 사용하는 것으로 알려져 있습니다.
-    
-    (사진 출처: [구글의 Search Advocate, John의 트위터](https://twitter.com/JohnMu/status/1232014208180592641))
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9b9f61a-6c34-4fca-9033-61e47021d14f/Untitled.png)
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_09.png" alt="그림 10 (출처: 구글의 Search Advocate, John의 트위터)" width="250px">
