@@ -74,7 +74,7 @@ date: 2022-03-25 13:03
 - 구하고 싶은, 웹 페이지의 점수(중요성, 신뢰성)를 **rank**라고 하겠습니다.
 - PageRank는 **웹 그래프**를 이용하여 웹 페이지의 rank를 계산하는 알고리즘입니다.
 
-ㅤ
+<p></p>
 
 - PageRank의 가정 (underlying assumption)
     - 참조가 많이 된 페이지는 참조가 적게 된 페이지보다 중요합니다.
@@ -103,7 +103,7 @@ date: 2022-03-25 13:03
 
 <img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="300px">
 
-ㅤ
+<p></p>
 
 - 다음과 같이 표현을 정리할 수 있습니다. 
     - 웹 페이지 A가 웹 페이지 B를 참조한다
@@ -112,7 +112,7 @@ date: 2022-03-25 13:03
     - == 웹 페이지 A가 웹 페이지 B를 투표했다
     - **== 웹 페이지 A의 작성자가 웹 페이지 B를 신뢰할 수 있다고 판단했다**
 
-ㅤ
+<p></p>
 
 - 즉, 어떤 페이지에 backlink (in-edge, in-link)가 많을수록, 그 페이지를 신뢰할 수 있다고 말할 수 있습니다.
 
@@ -127,7 +127,7 @@ date: 2022-03-25 13:03
         - == 투표 점수를 out-degree로 나누어 각 웹 페이지에 투표합니다. 
     1. 투표가 끝난 뒤, 각 웹 페이지는 자신이 받은 투표 점수을 모두 더하여, 자신의 새로운 투표 점수를 계산합니다.
 
-ㅤ
+<p></p>
 
 - (e.g.) 투표 점수 계산 방법 (그림 4)
     - 페이지 $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
@@ -135,11 +135,11 @@ date: 2022-03-25 13:03
 
 <img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
 
-ㅤ
+<p></p>
 
 - 단순하게 각 페이지들의 backlink 수를 세지 않고, 위와 같은 투표 방식을 도입한 이유는, 악성 웹 페이지들이 서로를 참조하여, backlink 수를 높게 만드는 조작을 하지 못하게 하기 위함입니다.
 
-ㅤ
+<p></p>
 
 - 각 웹 페이지의 rank의 정의는 다음과 같습니다.
     - $d_i$: out-degree
@@ -148,7 +148,7 @@ $$
 r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
 $$
 
-ㅤ
+<p></p>
 
 - 우리가 구하고 싶은 것이 웹 페이지의 rank인데, rank를 구하기 위해 rank를 사용하는 것이 이상하게 보일 수 있습니다.
     - 이 부분은 "4.4 Simple PageRank의 계산"에서 다루도록 하겠습니다.
@@ -165,14 +165,15 @@ $$
     - $p (t)$의 $i$번째 값 $p_i (t)$은, 웹 서퍼가 $t$ 번째 방문한 웹 페이지가 웹 페이지 $i$일 확률입니다.
 - $p (t)$ 는 웹 페이지에 대한 확률 분포가 됩니다.
 
-<p>
+<p></p>
 
 - $p (t)$로부터 $p (t+1)$을 계산할 수 있습니다.
     
 $$
 p_j (t+1) = \sum_{i \rightarrow j}^{} \bigg ( p_i(t) \times \frac{1}{d_i} \bigg ) = \sum_{i \rightarrow j}^{} \frac{p_i (t)}{d_i}
 $$
-    
+
+<p></p>
 
 - 웹 서퍼가 이 과정을 무한히 반복하고 나면, 즉 $t$가 무한히 커지면, 확률 분포 $p(t)$는 수렴하게 됩니다.
     - 다시 말하면,  $p(t) = p(t+1) = p$ 가 성립하게 됩니다.
@@ -189,7 +190,7 @@ $$
     - == random walk 관점에서의 stationary distribution
     - (== 논문 수식)
 
-ㅤ
+<p></p>
 
 - **투표 관점에서 정의한 rank**
     - $d_i$: out-degree
@@ -198,12 +199,16 @@ $$
 r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
 $$
 
+<p></p>
+
 - **random walk 관점에서 정의한 stationary distribution**
     
 $$
 p_j = \sum_{i \rightarrow j}^{} \frac{p_i}{d_i}
 $$
-    
+
+<p></p>
+
 - **논문 수식**
     
 $$
@@ -226,15 +231,14 @@ $$
 r = M \cdot r
 $$
     
-    - $r$ : rank 벡터
-    - $M$ : column stochastic adjacency matrix
-            
-        $$
-        M_{u, v} = \begin{cases} \frac{1}{N_u}, & \text{if there is an edge from} \; v \; \text{to} \; u \\ 0, & \text{otherwise} \end{cases}
-        $$
-            
+- $r$ : rank 벡터
+- $M$ : column stochastic adjacency matrix
     - $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
-
+        
+$$
+M_{u, v} = \begin{cases} \frac{1}{N_u}, & \text{if there is an edge from} \; v \; \text{to} \; u \\ 0, & \text{otherwise} \end{cases}
+$$
+        
 ---
 
 - 예제를 통해서 자세히 알아보도록 하겠습니다.
@@ -272,10 +276,10 @@ $$
 r = Mr
 $$
     
-    - 이 때, $M$은 column stochastic matrix입니다.
-        - column stochastic matrix는
-            - matrix의 모든 값들이 음수가 아니여야 합니다.
-            - 각 column의 합이 1입니다.
+- 이 때, $M$은 column stochastic matrix입니다.
+    - column stochastic matrix는
+        - matrix의 모든 값들이 음수가 아니여야 합니다.
+        - 각 column의 합이 1입니다.
 
 $$
 r = 
@@ -303,7 +307,7 @@ $$
 - $M \cdot r = 1 \cdot r$ 식을 보면,
     - $M$의 eigenvalue가 1이고, eigenvector가 $r$이라고 할 수있습니다.
 
-ㅤ
+<p></p>
 
 - eigenvector $r$을 구하기 위해, power iteration을 사용할 수 있습니다.
 
@@ -311,13 +315,13 @@ $$
 
 - rank 계산에는 power iteration을 사용합니다.
 
-ㅤ
+<p></p>
 
 - power iteration은 3단계로 구성됩니다.
     1. 각 웹 페이지 $i$의 rank $r_{i}^{(0)}$를 동일하게 $\displaystyle r_{i}^{(0)} = \frac{1}{\text{웹 페이지의 수}}$로 초기화합니다.
     1. 아래 식을 이용하여, 각 웹 페이지의 rank를 갱신합니다.
         
-    $$r_{j}^{(t+1)} = \sum_{i \rightarrow j}^{} \frac{r_i^{(t)}}{d_i}$$
+        $$r_{j}^{(t+1)} = \sum_{i \rightarrow j}^{} \frac{r_i^{(t)}}{d_i}$$
         
     1. rank가 수렴하면 ($r^{(t)} \approx r^{(t+1)}$) 종료하고, 아니면 (2)로 돌아갑니다.
         - rank가 수렴하면, $r^{(t)} \approx r^{(t+1)}$을 rank 벡터로 사용합니다.
