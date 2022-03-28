@@ -17,7 +17,6 @@ markdown: kramdown
 krandown:
   input: GFM
   highlighter: rouge
-  hard_wrap: false
 highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
