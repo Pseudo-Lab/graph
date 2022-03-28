@@ -52,9 +52,9 @@ date: 2022-03-25 13:03
 
 # 2 PageRank의 배경
 
-- 구글 이전의 검색 엔진은, 검색 결과로, 사용자가 입력한 키워드에 의존하여 웹 페이지를 반환했습니다.
+- 구글 이전의 검색 엔진은, 사용자가 입력한 키워드에 의존하여 웹 페이지를 반환했습니다.
 - 하지만 이러한 키워드에 의존하는 검색 엔진에는 취약점이 있습니다. 악성 웹 페이지들이 검색 엔진을 속여, 사용자의 검색 키워드에 상관 없이, 사용자들을 자신의 페이지로 오게 만들기 쉬웠습니다.
-    - (e.g.) “운동화" 판매자가 자신의 페이지에, 자신의 “운동화" 판매와 상관 없는 내용들을 (e.g., 영화, 음악, ...), 보이지 않게 (바탕과 똑같은 색깔의 글씨로) 가득 적어놓으면, 검색 엔진은 “영화"를 키워드로 검색에도 “운동화" 판매 페이지를 보여줍니다.
+    - (e.g.) “운동화" 판매자가 자신의 페이지에, 자신의 “운동화" 판매와 상관 없는 내용들을 (e.g., 영화, 음악, ...), 보이지 않게 (바탕색과 똑같은 색깔의 글씨로) 가득 적어놓으면, 검색 엔진은 “영화"를 키워드로 검색에도 “운동화" 판매 페이지를 보여줍니다.
 - 구글은, 검색 엔진의 품질을 향상시키기 위해, **PageRank** 기술을 도입했습니다.
 
 ---
@@ -63,7 +63,9 @@ date: 2022-03-25 13:03
 
 ## 3.1 웹 그래프
 
-- 웹은 node는 웹 페이지이고, edge는 하이퍼링크인 **directed graph**로 표현할 수 있습니다.
+- 웹은 **directed graph**로 표현할 수 있습니다.
+    - node: 웹 페이지
+    - edge: 하이퍼링크
 
 <img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (그림 출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="300px">
 
@@ -80,13 +82,14 @@ date: 2022-03-25 13:03
 
 ## 3.3 PageRank에 대한 직관
 
+- 그림 2에서,
+    - **웹 페이지 B**의 rank는 가장 높습니다.
+        - B가 다른 웹 페이지들로부터 참조가 많이 됐기 때문입니다.
+    - **웹 페이지 C**의 rank는 2번째로 높습니다.
+        - C는 참조가 1번 밖에 안 됐지만, rank가 가장 높은 B가 참조하고 있기 때문에, C의 rank도 높습니다.
+    - **보라색 페이지**들은 참조가 없지만, PageRank의 어떤 기법(teleport) 때문에, rank가 0이 아닙니다.
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="그림 2 (그림 출처: Wikipedia - PageRank)" width="400px">
-    
-- **웹 페이지 B**의 rank는 가장 높습니다.
-    - B가 다른 웹 페이지들로부터 참조가 많이 됐기 때문입니다.
-- **웹 페이지 C**의 rank는 2번째로 높습니다.
-    - C는 참조가 1번 밖에 안 됐지만, rank가 가장 높은 B가 참조하고 있기 때문에, C의 rank도 높습니다.
-- **보라색 페이지**들은 참조가 없지만, PageRank의 어떤 기법(teleport) 때문에, rank가 0이 아닙니다.
 
 ---
 
@@ -126,12 +129,11 @@ date: 2022-03-25 13:03
 
 ㅤ
 
-- (e.g.) 투표 점수 계산 방법
-
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
-
+- (e.g.) 투표 점수 계산 방법 (그림 4)
     - 페이지 $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
     - 페이지 $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
 
 ㅤ
 
@@ -163,7 +165,7 @@ $$
     - $p (t)$의 $i$번째 값 $p_i (t)$은, 웹 서퍼가 $t$ 번째 방문한 웹 페이지가 웹 페이지 $i$일 확률입니다.
 - $p (t)$ 는 웹 페이지에 대한 확률 분포가 됩니다.
 
-ㅤ
+<br>
 
 - $p (t)$로부터 $p (t+1)$을 계산할 수 있습니다.
     
