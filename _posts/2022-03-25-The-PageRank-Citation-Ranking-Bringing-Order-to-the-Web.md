@@ -65,9 +65,7 @@ date: 2022-03-25 13:03
 
 - 웹은 node는 웹 페이지이고, edge는 하이퍼링크인 **directed graph**로 표현할 수 있습니다.
 
-ㅤ
-
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (그림 출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="200px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (그림 출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="300px">
 
 ## 3.2 PageRank란?
 
@@ -94,16 +92,13 @@ date: 2022-03-25 13:03
 
 # 4 Simple PageRank
 
-## 4.1 투표 (vote) 관점에서의 Simple PageRank
+## 4.1 투표 (vote) 관점
 
 - PageRank는 투표를 통해 중요한 웹 페이지를 찾습니다.
 - 이 때, 웹 페이지 (node)는 투표를 받는 대상이고, 투표는 하이퍼링크 (edge)를 통해 이루어집니다.
+    - (e.g.) 그림 3에서, “I teach a class on Networks.” 페이지는 하이퍼링크를 통해 “CS224W: Classes are in the Gates building” 페이지에 투표했다고 생각할 수 있습니다.
 
-ㅤ
-
-- (e.g.) 그림 3에서, “I teach a class on Networks.” 페이지는 하이퍼링크를 통해 “CS224W: Classes are in the Gates building” 페이지에 투표했다고 생각할 수 있습니다.
-
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="300px">
 
 ㅤ
 
@@ -131,8 +126,10 @@ date: 2022-03-25 13:03
 
 ㅤ
 
-- (e.g.)
-    - <img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
+- (e.g.) 투표 점수 계산 방법
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
+
     - 페이지 $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
     - 페이지 $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
 
@@ -145,24 +142,28 @@ date: 2022-03-25 13:03
 - 각 웹 페이지의 rank의 정의는 다음과 같습니다.
     - $d_i$: out-degree
     
-    $$
-    r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
-    $$
+$$
+r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
+$$
 
 ㅤ
 
 - 우리가 구하고 싶은 것이 웹 페이지의 rank인데, rank를 구하기 위해 rank를 사용하는 것이 이상하게 보일 수 있습니다.
     - 이 부분은 "4.4 Simple PageRank의 계산"에서 다루도록 하겠습니다.
 
-## 4.2 random walk 관점에서의 Simple PageRank
+## 4.2 random walk 관점
 
 - random walk를 통해, 웹을 서핑하는 웹 서퍼가 있다고 가정합시다.
 - random walk를 통해, 웹을 서핑하는 웹 서퍼의 행동은 다음과 같습니다.
     - 웹 서퍼는, 현재 웹 페이지에 있는 여러 하이퍼링크 중 하나를 uniform한 확률로 선택해 이동합니다.
 
+ㅤ
+
 - $p (t)$ 라는 벡터가 있다고 가정합시다.
     - $p (t)$의 $i$번째 값 $p_i (t)$은, 웹 서퍼가 $t$ 번째 방문한 웹 페이지가 웹 페이지 $i$일 확률입니다.
 - $p (t)$ 는 웹 페이지에 대한 확률 분포가 됩니다.
+
+ㅤ
 
 - $p (t)$로부터 $p (t+1)$을 계산할 수 있습니다.
     
@@ -180,21 +181,20 @@ $$
 p_j (t+1) = \sum_{i \rightarrow j}^{} \frac{p_i (t)}{d_i} \quad\quad \Rightarrow \quad\quad p_j = \sum_{i \rightarrow j}^{} \frac{p_i}{d_i}
 $$
         
-## 4.3 Simple PageRank 관점 정리
+## 4.3 관점 정리
 
 - 투표 관점에서 정의한 rank
     - == random walk 관점에서의 stationary distribution
     - (== 논문 수식)
 
+ㅤ
+
 - **투표 관점에서 정의한 rank**
-    
+    - $d_i$: out-degree
+
 $$
 r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
 $$
-    
-- $d_i$ :
-    - out-degree
-    - node $i$의 forward link (out-edge, out-link) 수
 
 - **random walk 관점에서 정의한 stationary distribution**
     
@@ -211,7 +211,7 @@ $$
 - $u$: 웹 페이지
 - $B_u$: 페이지 $u$를 가르키는 페이지의 집합
 - $F_u$: 페이지 $u$가 가르키는 페이지의 집합
-- $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
+- $N_u = \|F_u\|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
 - $c$: normalization factor (모든 웹 페이지의 총 rank가 일정하도록)
 
 ## 4.4 Simple PageRank의 계산
@@ -224,76 +224,76 @@ $$
 r = M \cdot r
 $$
     
-- $r$ : rank 벡터
-- $M$ : column stochastic adjacency matrix
-        
-$$
-M_{u, v} = \begin{cases} \frac{1}{N_u}, & \text{if there is an edge from} \; v \; \text{to} \; u \\ 0, & \text{otherwise} \end{cases}
-$$
-        
-- $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
+    - $r$ : rank 벡터
+    - $M$ : column stochastic adjacency matrix
+            
+        $$
+        M_{u, v} = \begin{cases} \frac{1}{N_u}, & \text{if there is an edge from} \; v \; \text{to} \; u \\ 0, & \text{otherwise} \end{cases}
+        $$
+            
+    - $N_u = |F_u|$: 페이지 $u$가 가르키는 페이지의 수 (== 페이지 $u$에서 나가는 edge 수)
 
 ---
 
 - 예제를 통해서 자세히 알아보도록 하겠습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_04.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="100px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_04.png" alt="그림 5 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="250px">
     
 1. 각 페이지가 얻는 rank를 연립 방정식으로 표현해보겠습니다.
     - $\displaystyle r_a = \frac{1}{2} r_a + \frac{1}{2} r_b$
     - $\displaystyle r_b = \frac{1}{2} r_a + r_c$
     - $\displaystyle r_c = \frac{1}{2} r_b$
 1. (1)의 연립 방정식을 matrix 형태로 나타내보겠습니다.
-    $$
-    \begin{bmatrix}
-    r_a \\
-    r_b \\ 
-    r_c \\
-    \end{bmatrix}
-    
-    = 
-    \begin{bmatrix}
-    \frac{1}{2} & \frac{1}{2} & 0\\
-    \frac{1}{2} & 0 & 1\\ 
-    0 & \frac{1}{2} & 0 \\
-    \end{bmatrix}
-    
-    \begin{bmatrix}
-    r_a \\
-    r_b \\ 
-    r_c \\
-    \end{bmatrix}
-    $$
+
+$$
+\begin{bmatrix}
+r_a \\
+r_b \\ 
+r_c \\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} & 0\\
+\frac{1}{2} & 0 & 1\\ 
+0 & \frac{1}{2} & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+r_a \\
+r_b \\ 
+r_c \\
+\end{bmatrix}
+$$
+
 1. (2)의 matrix 식을 간단하게 $r = Mr$로 나타낼 수 있습니다. 
     
-    $$
-    r = Mr
-    $$
+$$
+r = Mr
+$$
     
     - 이 때, $M$은 column stochastic matrix입니다.
         - column stochastic matrix는
             - matrix의 모든 값들이 음수가 아니여야 합니다.
             - 각 column의 합이 1입니다.
-        
-    $$
-    r = 
-    \begin{bmatrix}
-    r_a \\
-    r_b \\ 
-    r_c \\
-    \end{bmatrix}
-    ,
-    
-    \quad
-    
-    M
-    = 
-    \begin{bmatrix}
-    \frac{1}{2} & \frac{1}{2} & 0\\
-    \frac{1}{2} & 0 & 1\\ 
-    0 & \frac{1}{2} & 0 \\
-    \end{bmatrix}
-    $$
+
+$$
+r = 
+\begin{bmatrix}
+r_a \\
+r_b \\ 
+r_c \\
+\end{bmatrix}
+,
+
+\quad
+
+M
+= 
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} & 0\\
+\frac{1}{2} & 0 & 1\\ 
+0 & \frac{1}{2} & 0 \\
+\end{bmatrix}
+$$
 
 ### 4.4.2 Simple PageRank의 eigenvector formulation
 
@@ -301,19 +301,23 @@ $$
 - $M \cdot r = 1 \cdot r$ 식을 보면,
     - $M$의 eigenvalue가 1이고, eigenvector가 $r$이라고 할 수있습니다.
 
+ㅤ
+
 - eigenvector $r$을 구하기 위해, power iteration을 사용할 수 있습니다.
 
 ### 4.4.3 Power Iteration
 
 - rank 계산에는 power iteration을 사용합니다.
 
+ㅤ
+
 - power iteration은 3단계로 구성됩니다.
     1. 각 웹 페이지 $i$의 rank $r_{i}^{(0)}$를 동일하게 $\displaystyle r_{i}^{(0)} = \frac{1}{\text{웹 페이지의 수}}$로 초기화합니다.
-    2. 아래 식을 이용하여, 각 웹 페이지의 rank를 갱신합니다.
+    1. 아래 식을 이용하여, 각 웹 페이지의 rank를 갱신합니다.
         
-        $\displaystyle r_{j}^{(t+1)} = \sum_{i \rightarrow j}^{} \frac{r_i^{(t)}}{d_i}$
+    $$r_{j}^{(t+1)} = \sum_{i \rightarrow j}^{} \frac{r_i^{(t)}}{d_i}$$
         
-    3. rank가 수렴하면 ($r^{(t)} \approx r^{(t+1)}$) 종료하고, 아니면 (2)로 돌아갑니다.
+    1. rank가 수렴하면 ($r^{(t)} \approx r^{(t+1)}$) 종료하고, 아니면 (2)로 돌아갑니다.
         - rank가 수렴하면, $r^{(t)} \approx r^{(t+1)}$을 rank 벡터로 사용합니다.
 
 ## 4.5 Simple PageRank의 문제점
