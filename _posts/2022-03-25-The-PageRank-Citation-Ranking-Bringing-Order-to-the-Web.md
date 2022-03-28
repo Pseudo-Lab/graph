@@ -8,7 +8,7 @@ tags: [pagerank]
 date: 2022-03-25 13:03
 ---
 
-ㅤ안녕하세요, 가짜연구소 Groovy Graph 팀의 한수민입니다. 이번 글에서는, PageRank 논문인 '[The PageRank Citation Ranking Bringing Order to the Web](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf)'을 정리해보도록 하겠습니다.
+ㅤ안녕하세요, 가짜연구소 Groovy Graph 팀의 한수민입니다. 이 글은, '[The PageRank Citation Ranking Bringing Order to the Web](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf)' 논문을 읽고, 정리한 글 입니다.
 
 ㅤ이 글은 Reference 자료들을 참고하여 정리하였음을 먼저 밝힙니다. 혹시 내용중 잘못된 점이나 보완할 점 있다면 댓글로 알려주시면 감사하겠습니다. 그럼 시작하겠습니다.
 
@@ -25,20 +25,20 @@ date: 2022-03-25 13:03
     1. PageRank란?
     1. PageRank에 대한 직관
 1. Simple PageRank
-    1. 투표 (vote) 관점에서의 Simple PageRank
-    1. random walk 관점에서의 Simple PageRank
-    1. Simple PageRank 관점 정리
-    1. Simple PageRank의 계산
+    1. 투표 (vote) 관점
+    1. random walk 관점
+    1. 관점 정리
+    1. Simple PageRank 계산
     1. Simple PageRank의 문제점
 1. ~~Simple~~ PageRank
-    1. Spider trap과 Dead end의 해결 방법
+    1. Spider trap과 Dead end 문제 해결
     1. ~~Simple~~ PageRank 계산 예시
 1. PageRank의 결과
     1. Convergence Properties
-1. + PageRank를 이해하는 데 필요한 수학
+1. \+ PageRank를 이해하는 데 필요한 수학
     1. Stochastic matrix
     1. Perron-Frobenius theorem
-1. + 질문
+1. \+ 질문
 
 ---
 
@@ -52,11 +52,10 @@ date: 2022-03-25 13:03
 
 # 2 PageRank의 배경
 
-- 구글 이전의 검색 엔진은, 사용자가 입력한 키워드에 의존하여, 웹페이지를 반환했습니다.
-    - 하지만 이런 검색 엔진은, 취약점이 있습니다.
-    - 악성 웹페이지들이 검색 엔진을 속여, 사용자의 검색 키워드에 상관 없이, 사용자들을 자신의 페이지로 오게 만들었습니다.
-        - 예를 들어, “운동화" 판매자가 자신의 페이지에, 자신의 “운동화" 판매와 상관 없는 내용들을 (e.g., 영화, 음악, ...), 보이지 않게 (바탕과 똑같은 색깔의 글씨로) 가득 적어놓으면, 검색 엔진은 “영화"를 키워드로 검색에도 “운동화" 판매 페이지를 보여줍니다.
-- 구글은, 검색 엔진의 품질을 향상시키기 위해, 웹 그래프 구조 (웹의 link structure)를 사용하는 **PageRank** 기술을 도입했습니다.
+- 구글 이전의 검색 엔진은, 검색 결과로, 사용자가 입력한 키워드에 의존하여 웹 페이지를 반환했습니다.
+- 하지만 이러한 키워드에 의존하는 검색 엔진에는 취약점이 있습니다. 악성 웹 페이지들이 검색 엔진을 속여, 사용자의 검색 키워드에 상관 없이, 사용자들을 자신의 페이지로 오게 만들기 쉬웠습니다.
+    - (e.g.) “운동화" 판매자가 자신의 페이지에, 자신의 “운동화" 판매와 상관 없는 내용들을 (e.g., 영화, 음악, ...), 보이지 않게 (바탕과 똑같은 색깔의 글씨로) 가득 적어놓으면, 검색 엔진은 “영화"를 키워드로 검색에도 “운동화" 판매 페이지를 보여줍니다.
+- 구글은, 검색 엔진의 품질을 향상시키기 위해, **PageRank** 기술을 도입했습니다.
 
 ---
 
@@ -64,30 +63,32 @@ date: 2022-03-25 13:03
 
 ## 3.1 웹 그래프
 
-- 웹은 node는 웹페이지 이고, edge는 하이퍼링크인 **directed graph**로 표현할 수 있습니다.
-- 예를 들어, 아래의 그림처럼 표현할 수 있습니다.
+- 웹은 node는 웹 페이지이고, edge는 하이퍼링크인 **directed graph**로 표현할 수 있습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="(그림 출처: The PageRank Citation Ranking: Bringing Order to the Web)" width="200px">
+ㅤ
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (그림 출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="200px">
 
 ## 3.2 PageRank란?
 
-- 구하고 싶은, 웹 페이지의 점수 (중요성, 신뢰성)를 **rank**라고 하겠습니다.
-- PageRank (PR)는 검색 엔진의 결과에서, 웹 페이지들의 rank를 계산하는 데 사용하는 알고리즘입니다.
-- PageRank (PR)는 **웹 그래프**를 이용하여 웹 페이지의 rank를 측정합니다.
+- 구하고 싶은, 웹 페이지의 점수(중요성, 신뢰성)를 **rank**라고 하겠습니다.
+- PageRank는 **웹 그래프**를 이용하여 웹 페이지의 rank를 계산하는 알고리즘입니다.
+
+ㅤ
 
 - PageRank의 가정 (underlying assumption)
-    - 참조가 많은 페이지는 참조가 적은 페이지보다 중요합니다.
+    - 참조가 많이 된 페이지는 참조가 적게 된 페이지보다 중요합니다.
     - 중요한 페이지가 참조한 페이지는 중요합니다.
 
 ## 3.3 PageRank에 대한 직관
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="(그림 출처: Wikipedia - PageRank)" style="width:400px">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/PageRanks-Example.svg/1920px-PageRanks-Example.svg.png" alt="그림 2 (그림 출처: Wikipedia - PageRank)" width="400px">
     
-- **웹 페이지 (node) B**의 rank는 가장 높습니다.
-    - 다른 웹 페이지들로부터 투표를 많이 받았기 때문입니다.
-- **웹 페이지 (node) C**의 rank는 2번째로 높습니다.
-    - 투표를 1개 밖에 받지 못했지만, rank가 가장 높은 B로부터 투표를 받았기 때문에, C의 rank도 높습니다.
-- **보라색 페이지 (node)**들은 투표를 받지 못했지만, PageRank의 어떤 기법(teleport) 때문에, rank가 0이 아닙니다.
+- **웹 페이지 B**의 rank는 가장 높습니다.
+    - B가 다른 웹 페이지들로부터 참조가 많이 됐기 때문입니다.
+- **웹 페이지 C**의 rank는 2번째로 높습니다.
+    - C는 참조가 1번 밖에 안 됐지만, rank가 가장 높은 B가 참조하고 있기 때문에, C의 rank도 높습니다.
+- **보라색 페이지**들은 참조가 없지만, PageRank의 어떤 기법(teleport) 때문에, rank가 0이 아닙니다.
 
 ---
 
@@ -98,43 +99,60 @@ date: 2022-03-25 13:03
 - PageRank는 투표를 통해 중요한 웹 페이지를 찾습니다.
 - 이 때, 웹 페이지 (node)는 투표를 받는 대상이고, 투표는 하이퍼링크 (edge)를 통해 이루어집니다.
 
-- 예를 들어, 아래의 그림에서, 페이지 (node) “I teach a class on Networks.” 는 하이퍼링크 (edge)를 통해 페이지 (node) “CS224W: Classes are in the Gates building”에 투표했다고 생각할 수 있습니다.
+ㅤ
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">
-            
-- 웹 페이지 A에 웹 페이지 B를 향한 하이퍼링크가 있다
-    - == 웹 페이지 B는 웹 페이지 A로부터 backlink (in-edge, in-link)가 있다
+- (e.g.) 그림 3에서, “I teach a class on Networks.” 페이지는 하이퍼링크를 통해 “CS224W: Classes are in the Gates building” 페이지에 투표했다고 생각할 수 있습니다.
+
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">
+
+ㅤ
+
+- 다음과 같이 표현을 정리할 수 있습니다. 
+    - 웹 페이지 A가 웹 페이지 B를 참조한다
+    - == 웹 페이지 A에서 웹 페이지 B로 가는 하이퍼링크가 있다
+    - == 웹 페이지 B에는 웹 페이지 A로부터 오는 backlink (in-edge, in-link)가 있다
     - == 웹 페이지 A가 웹 페이지 B를 투표했다
     - **== 웹 페이지 A의 작성자가 웹 페이지 B를 신뢰할 수 있다고 판단했다**
-- 다시 말하자면, backlink (in-edge, in-link)가 많을 수록, 신뢰할 수 있다고 할 수 있습니다.
+
+ㅤ
+
+- 즉, 어떤 페이지에 backlink (in-edge, in-link)가 많을수록, 그 페이지를 신뢰할 수 있다고 말할 수 있습니다.
 
 ---
 
-- PageRank의 투표 방식은,
-    1. 한 웹 페이지에서 가지고 있는 투표권 (rank) 을 forward link (out-edge, out-link) 수로 나누어 각 웹 페이지에 투표합니다. 
-    2. 각 웹 페이지의 rank는 받은 투표의 합으로 정의됩니다.
+- PageRank의 투표 방식은 다음과 같습니다.
+    1. 모든 웹 페이지는 투표 점수(rank)를 갖고 있습니다.
+        - 보통, 맨 처음에는 모두 같은 투표 점수를 갖고 있습니다.
+        - 우리는 중요하고, 신뢰가 가는 페이지가 다른 페이지들보다 투표 점수(rank)가 높기를 바랍니다.
+    1. 웹 페이지는 자신이 갖고 있는 투표 점수를, 투표하려는 웹 페이지에게 똑같이 나누어서 투표합니다. 
+        - == 자신이 갖고 있는 투표 점수를, 투표하려는 웹 페이지 수로 나누어, 나눠진 점수가 씌여진 종이를, 투표하려는 웹 페이지에게 보냅니다.
+        - == 투표 점수를 out-degree로 나누어 각 웹 페이지에 투표합니다. 
+    1. 투표가 끝난 뒤, 각 웹 페이지는 자신이 받은 투표 점수을 모두 더하여, 자신의 새로운 투표 점수를 계산합니다.
 
-- 단순하게 backlink 수를 세지 않고, forward link 수로 나눈 후에 합산하는 이유는, 악성 웹 페이지들이 서로를 참조하여, backlink 수를 높게 만드는 조작을 하지 못하도록 하기 위함입니다.
+ㅤ
 
-- 예를 들어, 아래 그림에서
+- (e.g.)
+    - <img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
+    - 페이지 $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
+    - 페이지 $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="(그림 출처: CS224W 4. Link Analysis: PageRank)" width="200px">
-        
-- 페이지 (node) $j$의 rank는 $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 입니다.
-- 페이지 (node) $j$의 rank는 $j$의 forward link (out-edge, out-link) 수로 나누어져서 각각의 다른 웹 페이지로 투표 됩니다.
+ㅤ
 
-- 각 웹 페이지의 rank를 정의는 다음과 같습니다.
+- 단순하게 각 페이지들의 backlink 수를 세지 않고, 위와 같은 투표 방식을 도입한 이유는, 악성 웹 페이지들이 서로를 참조하여, backlink 수를 높게 만드는 조작을 하지 못하게 하기 위함입니다.
+
+ㅤ
+
+- 각 웹 페이지의 rank의 정의는 다음과 같습니다.
+    - $d_i$: out-degree
     
-$$
-r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
-$$
-    
-- $d_i$ :
-    - out-degree
-    - node $i$의 forward link (out-edge, out-link) 수
-- PageRank를 통해 rank를 구하려는 것인데, 이 과정에서 rank를 사용한다는 것이 이상하게 들릴 수 있습니다.
-    - 이것은 recursion (재귀)를 통해 풀이할 수 있습니다.
-    - 이 부분은 [4.4 Simple PageRank의 계산](https://www.notion.so/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web-59fc2bc5eefe45229ba152c4ff4ad39d)에서 다루도록 하겠습니다.
+    $$
+    r_j = \sum_{i \rightarrow j}^{} \frac{r_i}{d_i}
+    $$
+
+ㅤ
+
+- 우리가 구하고 싶은 것이 웹 페이지의 rank인데, rank를 구하기 위해 rank를 사용하는 것이 이상하게 보일 수 있습니다.
+    - 이 부분은 "4.4 Simple PageRank의 계산"에서 다루도록 하겠습니다.
 
 ## 4.2 random walk 관점에서의 Simple PageRank
 
@@ -688,9 +706,3 @@ $$
     (사진 출처: [구글의 Search Advocate, John의 트위터](https://twitter.com/JohnMu/status/1232014208180592641))
     
     ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9b9f61a-6c34-4fca-9033-61e47021d14f/Untitled.png)
-    
-
-# 7 Reference
-
-- [CS224W 4. Link Analysis: PageRank](http://web.stanford.edu/class/cs224w/slides/04-pagerank.pdf)
-- [[Paper Review] The PageRank Citation Ranking: Bringing Order to the Web](https://youtu.be/2CWnZfBSj0Q)
