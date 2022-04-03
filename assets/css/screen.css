@@ -878,7 +878,7 @@ body.tag-template #navbar {
 
 #post-content blockquote {
     margin: 28px 0;
-    padding: 28px;
+    padding: 15px;
     border-left: 3px solid #f3cf00;
 }
 
@@ -1356,7 +1356,7 @@ body.page-template {
     #post-list .post-title {
         font-size: 18px;
         line-height: 26px; /* 26px = 18(font-size) + 8(spacing) */
-        max-height: 52px; /* 2 lines */
+        /* max-height: 52px; */ /* 2 lines */
         display: -webkit-box; /* multi-line ellipsis */
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
