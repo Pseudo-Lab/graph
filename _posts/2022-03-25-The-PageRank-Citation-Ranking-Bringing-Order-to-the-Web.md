@@ -35,9 +35,6 @@ date: 2022-03-25 13:03
     1. ~~Simple~~ PageRank 계산 예시
 1. PageRank의 결과
     1. Convergence Properties
-1. \+ PageRank를 이해하는 데 필요한 수학
-    1. Stochastic matrix
-    1. Perron-Frobenius theorem
 1. \+ 질문
 
 ---
@@ -335,7 +332,7 @@ $$
 - (e.g.) spider trap 문제가 발생하는 경우 (그림 6)
     - iteration 1과 iteration 4의 rank는 동일합니다. 따라서, rank가 수렴하지 않고, 무한히 반복됩니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_05.png" alt="그림 6 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="250px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_05.png" alt="그림 6 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="400px">
 
 <p></p>
 
@@ -355,7 +352,7 @@ $$
 - (e.g.) dead end 문제가 발생하는 경우 (그림 7)
     - 모든 node의 rank가 모두 0으로 수렴합니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_06.png" alt="그림 7 (출처: CS224W 4. Link Analysis: PageRank)" width="250px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_06.png" alt="그림 7 (출처: CS224W 4. Link Analysis: PageRank)" width="350px">
 
 - 해결 방법은 밑에서 알아보도록 하겠습니다.
 
@@ -364,8 +361,9 @@ $$
 - 논문에서는 dead end를 모두 제거한 후에, rank를 계산했습니다.
 - 논문의 **2.7 Dangling Links**을 보면, 다음과 같이 나와있습니다.
     
-    > dangling links는 다른 페이지의 rank에 직접적인 영향을 미치지 않기 때문에, 모든 PageRank가 계산될 때까지 시스템에서 dangling links를 제거하기만 하면 됩니다.
-    > 제거된 dangling links와 같은 페이지에 있는 다른 edge의 normalization은 약간 변하지만, 큰 영향은 없을 것입니다.
+> dangling links는 다른 페이지의 rank에 직접적인 영향을 미치지 않기 때문에, 모든 PageRank가 계산될 때까지 시스템에서 dangling links를 제거하기만 하면 됩니다.
+
+> 제거된 dangling links와 같은 페이지에 있는 다른 edge의 normalization은 약간 변하지만, 큰 영향은 없을 것입니다.
 
 ---
 
@@ -417,7 +415,7 @@ $$
 
 - 그림 8과 같은 웹 그래프가 있을 때, PageRank를 계산하는 방법에 대해 알아보겠습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_07.png" alt="그림 8" width="250px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_07.png" alt="그림 8" width="350px">
 
 ### 1. adjacency matrix $A$ 구하기
 
@@ -470,10 +468,10 @@ $$
 $$
 H = 
 \begin{bmatrix}
-0 & 0 & 0 & \red0 \\
-\frac{1}{2} & 0 & 1 & \red0 \\
-0 & 1 & 0 & \red0 \\
-\frac{1}{2} & 0 & 0 & \red0 
+0 & 0 & 0 & \color{red}{0} \\
+\frac{1}{2} & 0 & 1 & \color{red}{0} \\
+0 & 1 & 0 & \color{red}{0} \\
+\frac{1}{2} & 0 & 0 & \color{red}{0}
 \end{bmatrix}
 $$
     
@@ -495,10 +493,10 @@ $$
 M = 
 
 \begin{bmatrix}
-0 & 0 & 0 & \red{\frac{1}{4}} \\
-\frac{1}{2} & 0 & 1 & \red{\frac{1}{4}} \\
-0 & 1 & 0 & \red{\frac{1}{4}} \\
-\frac{1}{2} & 0 & 0 & \red{\frac{1}{4}}
+0 & 0 & 0 & \color{red}{\frac{1}{4}} \\
+\frac{1}{2} & 0 & 1 & \color{red}{\frac{1}{4}} \\
+0 & 1 & 0 & \color{red}{\frac{1}{4}} \\
+\frac{1}{2} & 0 & 0 & \color{red}{\frac{1}{4}}
 \end{bmatrix}
 $$
     
@@ -587,121 +585,14 @@ $$
 - PageRank가 매우 큰 데이터에서도 매우 잘 확장될 것임을 시사합니다.
 
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_08.png" alt="그림 9 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="250px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_08.png" alt="그림 9 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="450px">
 
 ---
 
-# +7 PageRank를 이해하는 데 필요한 수학
+# 7 질문
 
-## 7.1 Stochastic matrix
-
-> stochastic matrix $A$는 항상 eigenvalue $1$을 갖습니다. 그리고 다른 모든 eigenvalue들은 절대값이 1보다 작거나 1과 같습니다.
-
-### 7.1.1 증명
-
-- column stochastic matrix $A$가 있습니다.
-- row stochastic matrix $A^{\text{T}}$가 있습니다.
-- row stochastic matrix $A^{\text{T}}$는
-    - $A^{\text{T}} \textbf{x} = \lambda \textbf{x}$ 식을 만족하는, eigenvalue $\lambda=1$과 eigenvector $\textbf{x} = \begin{bmatrix} 1 \; 1 \; 1 \; \cdots \;1\end{bmatrix}^{\text{T}}$ 를 갖습니다.
-
-$$
-\begin{bmatrix} 
-a_{11} & a_{12} & \dots &   a_{1n} \\ 
-a_{21} &a_{22} &  \dots & a_{2n}  \\ 
-\vdots & \vdots & \dots & \vdots \\ 
-a_{n1} & a_{n2} & \dots & a_{nn} \end{bmatrix} 
-
-\begin{bmatrix} 
-1 \\ 
-1 \\ 
-\vdots \\ 
-1 
-\end{bmatrix} 
-
-= 
-
-\begin{bmatrix} 
-a_{11}+a_{12}+\cdots+a_{1n} \\ 
-a_{21}+a_{22}+\cdots+a_{2n} \\ 
-\vdots \\ 
-a_{n1}+a_{n2}\cdots+a_{nn} 
-\end{bmatrix} 
-
-= 1\cdot 
-\begin{bmatrix} 
-1 \\ 
-1 \\ 
-\vdots \\ 
-1 
-\end{bmatrix}
-$$
-        
-- $A$와 $A^{\text{T}}$는 같은 eigenvalue를 갖기 때문에, column stochastic matrix $A$도 eigenvalue  $\lambda=1$을 갖습니다.
-
----
-
-- 이제 $A$ 에 대하여, eigenvalue가 $\| \lambda \| > 1$이고, eigenvector $\textbf{v}$라고 해봅시다.
-    - 그렇다면 $A \textbf{v} = \lambda \textbf{v}$ 입니다.
-- $A \textbf{v} = \lambda \textbf{v}$ 의 $i$번 째 row를 뽑아보면, 다음과 같습니다.
-    - $a_{i1}v_1+a_{i2}v_2+\cdots+a_{in}v_n=\lambda v_i$
-        
-        $$
-        \begin{bmatrix} 
-        a_{11} & a_{12} & \dots &   a_{1n} \\ 
-        a_{21} &a_{22} &  \dots & a_{2n}  \\ 
-        \vdots & \vdots & \dots & \vdots \\ 
-        a_{n1} & a_{n2} & \dots & a_{nn} \end{bmatrix} 
-        
-        \begin{bmatrix} 
-        v_1 \\ 
-        v_2 \\ 
-        \vdots \\ 
-        v_n 
-        \end{bmatrix} 
-        
-        = 
-        
-        \begin{bmatrix} 
-        a_{11}v_1+a_{12}v_2+\cdots+a_{1n}v_n \\ 
-        a_{21}v_1+a_{22}v_2+\cdots+a_{2n}v_n \\ 
-        \vdots \\ 
-        a_{n1}v_1+a_{n2}v_2\cdots+a_{nn}v_n 
-        \end{bmatrix} 
-        $$
-        
-- $\|v_k\| = \max\{\|v_1\|, \; \|v_2\|, \; \dots , \; \|v_n\|\}$ 라고 합시다.
-    - $\|v_k\|$는 $\textbf{v}$의 entries에 절대값을 씌었을 때, 가장 큰 값입니다.
-    - $\|v_k\| > 0$ 입니다.
-        - 절대값인 $\|v_k\| \leq 0$ 이려면, $\|v_k\| = 0$ 이 되고, $\textbf{v} = \textbf{0}$이 됩니다. 이렇게 되면, eigenvector가 영벡터가 아니여야 한다는 가정에 모순이 됩니다.
-- $A \textbf{v} = \lambda \textbf{v}$ 의 $k$번 째 row를 뽑아서 풀어보도록 하겠습니다.
-    
-    $$
-    \begin{align*} 
-    |\lambda|\cdot |v_k| &= |a_{k1}v_1+a_{k2}v_2+\cdots+a_{kn}v_n|\\ 
-    & \leq a_{k1}|v_1|+a_2|v_2|+\cdots+ a_{kn}|v_{n}| \\ 
-    &\leq a_{k1}|v_k|+a_2|v_k|+\cdots+ a_{kn}|v_{k}| \\ 
-    &=(a_{k1}+a_{k2}+\cdots+a_{kn})|v_k| \\
-    &= |v_k|
-    \end{align*}
-    $$
-    
-    $$
-    \therefore \quad |\lambda| \; \leq \; 1
-    $$
-
-## 7.2 Perron-Frobenius theorem
-
-- Perron-Frobenius theorem
-    - $n \times n$ 행렬 $A$의 모든 entries가 양수이면,
-        - unique한 dominant eigenvalue를 갖습니다.
-        - eigenvector의 entries도 양수입니다.
-
----
-
-# +8 질문
-
-## 8.1 구글은 지금도 PageRank를 사용할까?
+## 7.1 구글은 지금도 PageRank를 사용할까?
 
 - PageRank 논문은 1998년에 나왔지만, 구글은 현재도 검색 엔진의 품질 향상을 위해 PageRank를 사용하는 것으로 알려져 있습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_09.png" alt="그림 10 (출처: 구글의 Search Advocate, John의 트위터)" width="250px">
+<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_09.png" alt="그림 10 (출처: 구글의 Search Advocate, John의 트위터)" width="450px">
