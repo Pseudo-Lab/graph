@@ -10,11 +10,11 @@ excerpt: GrGr 팀을 소개합니다.
 
 <p></p>
 
-GrGr 팀은, Graph Representation Learning (GRL) 관련 논문들을 공부하는 것을 목표로 하고 있습니다.
+GrGr 팀은, Graph Representation Learning (GRL) 관련 논문들을 공부하는 팀입니다.
 
 <p></p>
 
-이 블로그의 목표는 GrGr 모임에서 공부한 논문의 내용을 정리하여 공유하는 것입니다.
+이 블로그를 통해 GrGr 팀에서 공부한 논문의 내용을 정리하여 공유하고자 합니다.
 
 <p></p>
 
@@ -23,4 +23,3 @@ GrGr 팀은, Graph Representation Learning (GRL) 관련 논문들을 공부하�
 <p></p>
 
 블로그 내용을 포함한 저희의 모든 활동에 대해 다양한 피드백과 Pull Request를 기대합니다.
-
