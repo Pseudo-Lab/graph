@@ -1,5 +1,5 @@
 ---
 name: Daehwan.Oh
 title: 오대환
-image: /files/authors/Gundam's_head.jpeg
+image: /files/authors/Daehwan.Oh.jpeg
 ---
