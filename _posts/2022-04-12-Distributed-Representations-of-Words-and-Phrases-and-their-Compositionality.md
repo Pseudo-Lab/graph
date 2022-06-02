@@ -2,7 +2,7 @@
 layout: post
 use_math: true
 
-title: 'The PageRank Citation Ranking: Bringing Order to the Web'
+title: 'Distributed Representations of Words and Phrases and their Compositionality'
 author: Eunhee.Kim
 tags: [word2vec]
 date: 2022-04-12
