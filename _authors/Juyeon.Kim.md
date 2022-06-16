@@ -1,5 +1,5 @@
 ---
 name: Juyeon.Kim
 title: 김주연
-image:
+image:/files/authors/Juyeon.Kim.JPG
 ---
