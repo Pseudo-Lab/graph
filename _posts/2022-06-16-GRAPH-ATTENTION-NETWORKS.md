@@ -262,3 +262,20 @@ Attention coefficients (node i 에 대해 node j의 feature가 갖는 importance
 - Attention mechanism을 활용하여 모델 해석 가능성에 대한 분석
 - 노드 분류 대신 그래프 분류에도 적용 가능
 - Edge feature를 통합하도록 모델 확장 필요
+
+## Ref
+[1] 
+
+[Graph Neural Network 찍어먹기](https://tootouch.github.io/research/gnn_summary/)
+
+[3]
+
+[[머신 러닝/딥 러닝] 그래프 어텐션 네트워크 (Graph Attention Network) 구조 및 설명](https://untitledtblog.tistory.com/174)
+
+[4]
+
+[Graph Attention Networks (Pytorch)](https://chioni.github.io/posts/gat/)
+
+[5]
+
+[고려대학교 DMQA 연구실](http://dmqm.korea.ac.kr/activity/seminar/296)
