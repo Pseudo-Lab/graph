@@ -6,7 +6,7 @@ baseurl: ''
 url: 'https://pseudo-lab.github.io/teamgrgr'
 timezone: Asia/Seoul
 
-repository: pseudo-lab/teamgrgr
+repository: Pseudo-Lab/teamgrgr
 
 permalink: /blog/:title/
 
