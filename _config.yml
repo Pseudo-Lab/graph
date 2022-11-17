@@ -1,9 +1,9 @@
-title: 블로그
-email: etckoko@gmail.com
+title: Graph 블로그
+email: 
 description: |
   Connect Everything 새로운 연결, 새로운 세상.
-baseurl: 'graph'
-url: 'https://pseudo-lab.github.io'
+baseurl: '/'
+url: 'https://pseudo-lab.github.io/graph'
 timezone: Asia/Seoul
 
 repository: pseudo-lab/graph

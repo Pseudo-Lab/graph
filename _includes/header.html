@@ -6,7 +6,7 @@
         <span class="sr-only">Toggle Search Form</span>
     </button>
     <a id="logo" href="/">
-        <span class="sr-only">Groovy Graph</span>
+        <span class="sr-only">Pseudo-Lab Graph Blog</span>
     </a>
 
     <form id="search">
@@ -15,9 +15,9 @@
     <ul id="results-container" class="search_results"></ul>
 
     <ul id="menu" class="nav">
-        <li class="{% if page.url == '/about/' %} active {% endif %}"><a href="{{ base_path }}/about/">About</a></li>
-<!--         <li class="{% if page.url == '/team/' %} active {% endif %}"><a href="{{ base_path }}/team/">Team</a></li> -->
-        <li class="{% if page.url != '/about/' and page.url != '/team/' %} active {% endif %}"><a href="{{ base_path }}/">블로그</a></li>
+        <li class="{% if page.url == '/about/' %} active {% endif %}"><a href="{{ site.baseurl }}/about/">About</a></li>
+<!--         <li class="{% if page.url == '/team/' %} active {% endif %}"><a href="{{ site.baseurl }}/team/">Team</a></li> -->
+        <li class="{% if page.url != '/about/' and page.url != '/team/' %} active {% endif %}"><a href="{{ site.baseurl }}/">블로그</a></li>
     </ul>
 </div>
 
@@ -35,16 +35,6 @@
         fuzzy: false,
         exclude: ['Welcome']
     })
-</script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-760HM9RS3H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-760HM9RS3H');
 </script>
 
 <!-- #header -->
