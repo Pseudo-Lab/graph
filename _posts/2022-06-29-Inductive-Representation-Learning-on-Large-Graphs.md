@@ -81,9 +81,9 @@ GraphSAGE에서 제안한 방법들을 본격적으로 살펴보겠습니다.
 
 ## 3.1 Embedding generation algorithm
 우선 알고리즘 형태로 간단하게 살펴보겠습니다.
-<img src="/files/posts/GraphSAGE/alg1.png" width="300px" class="center">
+<img src="/graph/files/posts/GraphSAGE/alg1.png" width="300px" class="center">
 간단하게 그림으로 표현하면 아래와 같습니다.
-<img src="/files/posts/GraphSAGE/alg1-sketch.png" width="300px" class="center">
+<img src="/graph/files/posts/GraphSAGE/alg1-sketch.png" width="300px" class="center">
 
 1. Node의 이웃들로부터 정보를 aggregate 한다.
 2. Aggregate된 정보를 원래의 representation $h^{k-1}_{v}$와 concatenate 한다.
@@ -148,7 +148,7 @@ $$
 
 - 3가지 benchmart tasks에 대해 실험을 진행했습니다.
     
-    <img src="/files/posts/GraphSAGE/table1.png" width="300px" class="center">
+    <img src="/graph/files/posts/GraphSAGE/table1.png" width="300px" class="center">
     
     - GraphSAGE가 다른 방법보다 더 좋은 성능을 보입니다.
     - 속도측면에서도 효과적이며, 이웃의 수가 증가함에 따라 속도와 성능 둘다 증가합니다.

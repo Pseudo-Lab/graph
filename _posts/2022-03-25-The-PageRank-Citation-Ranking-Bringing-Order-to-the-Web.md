@@ -64,7 +64,7 @@ date: 2022-03-25 13:03
     - node: 웹 페이지
     - edge: 하이퍼링크
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="300px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_01.png" alt="그림 1 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="300px">
 
 ## 3.2 PageRank란?
 
@@ -98,7 +98,7 @@ date: 2022-03-25 13:03
 - 이 때, 웹 페이지 (node)는 투표를 받는 대상이고, 투표는 하이퍼링크 (edge)를 통해 이루어집니다.
     - (e.g.) 그림 3에서, “I teach a class on Networks.” 페이지는 하이퍼링크를 통해 “CS224W: Classes are in the Gates building” 페이지에 투표했다고 생각할 수 있습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (출처: CS224W 4. Link Analysis: PageRank)" width="300px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_02.png" alt="그림 3 (출처: CS224W 4. Link Analysis: PageRank)" width="300px">
 
 <p></p>
 
@@ -129,7 +129,7 @@ date: 2022-03-25 13:03
     - 페이지 $j$는, 자신의 투표 점수 (rank) $r_j$를 out-degree 수로 나눈 $\displaystyle \frac{r_j}{3}$를, out-edge가 가리키는 페이지에게 보냅니다.
     - 페이지 $j$의 새로운 투표 점수 (rank)는, in-edge를 통해 받은 투표 점수들의 합이므로, $\displaystyle r_j = \frac{r_i}{3} + \frac{r_k}{4}$ 가 됩니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_03.png" alt="그림 4 (출처: CS224W 4. Link Analysis: PageRank)" width="200px">        
 
 <p></p>
 
@@ -238,7 +238,7 @@ $$
 
 - 예제를 통해서 자세히 알아보도록 하겠습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_04.png" alt="그림 5 (출처: CS224W 4. Link Analysis: PageRank)" width="250px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_04.png" alt="그림 5 (출처: CS224W 4. Link Analysis: PageRank)" width="250px">
     
 1. 각 페이지가 얻는 rank를 연립 방정식으로 표현해보겠습니다.
     - $\displaystyle r_a = \frac{1}{2} r_a + \frac{1}{2} r_b$
@@ -332,7 +332,7 @@ $$
 - (e.g.) spider trap 문제가 발생하는 경우 (그림 6)
     - iteration 1과 iteration 4의 rank는 동일합니다. 따라서, rank가 수렴하지 않고, 무한히 반복됩니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_05.png" alt="그림 6 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="400px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_05.png" alt="그림 6 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="400px">
 
 <p></p>
 
@@ -352,7 +352,7 @@ $$
 - (e.g.) dead end 문제가 발생하는 경우 (그림 7)
     - 모든 node의 rank가 모두 0으로 수렴합니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_06.png" alt="그림 7 (출처: CS224W 4. Link Analysis: PageRank)" width="350px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_06.png" alt="그림 7 (출처: CS224W 4. Link Analysis: PageRank)" width="350px">
 
 - 해결 방법은 밑에서 알아보도록 하겠습니다.
 
@@ -415,7 +415,7 @@ $$
 
 - 그림 8과 같은 웹 그래프가 있을 때, PageRank를 계산하는 방법에 대해 알아보겠습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_07.png" alt="그림 8" width="350px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_07.png" alt="그림 8" width="350px">
 
 ### 1. adjacency matrix $A$ 구하기
 
@@ -585,7 +585,7 @@ $$
 - PageRank가 매우 큰 데이터에서도 매우 잘 확장될 것임을 시사합니다.
 
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_08.png" alt="그림 9 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="450px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_08.png" alt="그림 9 (출처: 논문 The PageRank Citation Ranking: Bringing Order to the Web)" width="450px">
 
 ---
 
@@ -595,4 +595,4 @@ $$
 
 - PageRank 논문은 1998년에 나왔지만, 구글은 현재도 검색 엔진의 품질 향상을 위해 PageRank를 사용하는 것으로 알려져 있습니다.
 
-<img src="/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_09.png" alt="그림 10 (출처: 구글의 Search Advocate, John의 트위터)" width="450px">
+<img src="/graph/files/posts/The-PageRank-Citation-Ranking-Bringing-Order-to-the-Web/fig_09.png" alt="그림 10 (출처: 구글의 Search Advocate, John의 트위터)" width="450px">

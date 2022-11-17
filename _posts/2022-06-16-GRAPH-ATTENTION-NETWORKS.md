@@ -34,8 +34,8 @@ tags: [GAT]
 → 학습된 파라미터를 local filter에 효율적으로 재사용 가능
 - 하지만, 많은 구조들이 그리드 구조로 되어있지 않고 주로 **그래프의 형태**로 표현 (3D meshes, social networks, telecommunication networks, biological networks or brain connectomes)
 
-<img src="/files/posts/GAT/1.png" width="500px">
-<img src="/files/posts/GAT/2.png" width="500px">
+<img src="/graph/files/posts/GAT/1.png" width="500px">
+<img src="/graph/files/posts/GAT/2.png" width="500px">
 
 **Spectral approaches** 
 
@@ -52,17 +52,17 @@ tags: [GAT]
 - 각각의 node degree를 위한 weight matrix를 학습하는 방식
     - **GraphSAGE**
     Inductive 방식으로 노드의 representations을 계산하는 방식, 각 노드의 **고정된 크기의 이웃**을 샘플링 후 특정한 **aggregator**를 수행(이웃의 특징 벡터를 평균내어 샘플링)하고 결과를 recurrent neural network에 먹이는 방식
-    <img src="/files/posts/GAT/3.png" width="300px">
+    <img src="/graph/files/posts/GAT/3.png" width="300px">
 
 **GAT** 
 
 - Self-attention으로 노드 embedding layer가 정의, 노드의 embedding을 생성할 때 인접한 노드들에 대한 중요도를 계산하여 이를 기반으로 새로운 embedding 생성
 
-<img src="/files/posts/GAT/4.png" width="500px">
+<img src="/graph/files/posts/GAT/4.png" width="500px">
 
 **Self-attention Mechanism [3]**
 
-<img src="/files/posts/GAT/5.png" width="500px">
+<img src="/graph/files/posts/GAT/5.png" width="500px">
 
 - Sequence-based task 주로 사용
 - it 이 나타내는 것은?
@@ -93,7 +93,7 @@ tags: [GAT]
 
 ### **2.1 GRAPH ATTENTIONAL LAYER [4]**
 
-<img src="/files/posts/GAT/6.png" width="500px">
+<img src="/graph/files/posts/GAT/6.png" width="500px">
 
 | 파라미터 | 노드의 feature의 set |
 | --- | --- |
@@ -107,30 +107,30 @@ tags: [GAT]
 1. 노드에 self-attention 적용, 
 Attention coefficients (node i 에 대해 node j의 feature가 갖는 importance) j는 i의 이웃
 
-    <img src="/files/posts/GAT/7.png" width="200px">
+    <img src="/graph/files/posts/GAT/7.png" width="200px">
 
 2. 다른 노드로부터 coefficients를 쉽게 비교하게 만들기 위해, softmax 함수를 이용
 
-    <img src="/files/posts/GAT/8.png" width="300px">
+    <img src="/graph/files/posts/GAT/8.png" width="300px">
 
   - 위의  $a$ = single-layer feedforward neural network weight vector($\overrightarrow a \in \mathbb{R}^{2F'}$)와 LeakyReLU activation으로 정의
-   <img src="/files/posts/GAT/9.png" width="300px">
-   <img src="/files/posts/GAT/10.png" width="300px">
+   <img src="/graph/files/posts/GAT/9.png" width="300px">
+   <img src="/graph/files/posts/GAT/10.png" width="300px">
    
 3. 이렇게 계산된 Attention score는 Node i 의 중요도를 결정하여 Input data를 다시 정의
 
-   <img src="/files/posts/GAT/11.png" width="300px">
+   <img src="/graph/files/posts/GAT/11.png" width="300px">
 
 4. GAT에서는 concat한 임베딩 벡터를 feed forward하는 어텐션 네트워크를 K개 가진다.
 (|| = concatenation operation)
 
-   <img src="/files/posts/GAT/12.png" width="300px">
+   <img src="/graph/files/posts/GAT/12.png" width="300px">
    
 5. 만약 h’ 뒤에 output을 위한 fc layer가 추가되는 것이 아닐 때 취하는 구조
 5번과 같이 concat 하는 것이 아니라 K개의 F’ 길이 벡터들을 합해준 뒤 평균
 
-   <img src="/files/posts/GAT/13.png" width="300px">
-   <img src="/files/posts/GAT/14.png" width="600px">
+   <img src="/graph/files/posts/GAT/13.png" width="300px">
+   <img src="/graph/files/posts/GAT/14.png" width="600px">
    
    
    
@@ -153,7 +153,7 @@ Attention coefficients (node i 에 대해 node j의 feature가 갖는 importance
 ## EVALUATION
 
 ### **3.1 DATASETS**
-   <img src="/files/posts/GAT/15.png" width="500px">
+   <img src="/graph/files/posts/GAT/15.png" width="500px">
 - Transductive & Inductive 모두에 적용되는 graph benchmark dataset
 
 ### 3.2 STATE-OF-THE-ART METHODS
@@ -182,7 +182,7 @@ Attention coefficients (node i 에 대해 node j의 feature가 갖는 importance
 
 - ELU
 
-  <img src="/files/posts/GAT/16.png" width="400px">
+  <img src="/graph/files/posts/GAT/16.png" width="400px">
    
 
 - Hyperparameter를 Cora dataset에 최적화 시킨 후, Cite-seer dataset에도 재사용
@@ -229,13 +229,13 @@ Attention coefficients (node i 에 대해 node j의 feature가 갖는 importance
 
 **Transductive learning**
 
-   <img src="/files/posts/GAT/17.png" width="500px">
+   <img src="/graph/files/posts/GAT/17.png" width="500px">
 
 - 평가 : Mean classification accuracy (표준편차 포함)
 
 **Inductive learning**
 
-   <img src="/files/posts/GAT/18.png" width="500px">
+   <img src="/graph/files/posts/GAT/18.png" width="500px">
 
 - 평가 : Micro averaged F1 score
 
@@ -248,7 +248,7 @@ Attention coefficients (node i 에 대해 node j의 feature가 갖는 importance
 - 학습된 features의 표현의 효과를 질적으로 측정 가능, Cora dataset에서 사전 훈련된 GAT 모델의 첫번째 layer에서 추출한 features representation의 시각화 제공
 
 
-   <img src="/files/posts/GAT/19.png" width="500px">
+   <img src="/graph/files/posts/GAT/19.png" width="500px">
 
 ## CONCLUSIONS
 
@@ -263,19 +263,12 @@ Attention coefficients (node i 에 대해 node j의 feature가 갖는 importance
 - 노드 분류 대신 그래프 분류에도 적용 가능
 - Edge feature를 통합하도록 모델 확장 필요
 
-## Ref
-[1] 
+## Reference
 
-[Graph Neural Network 찍어먹기](https://tootouch.github.io/research/gnn_summary/)
+[1] [Graph Neural Network 찍어먹기](https://tootouch.github.io/research/gnn_summary/)
 
-[3]
+[3] [[머신 러닝/딥 러닝] 그래프 어텐션 네트워크 (Graph Attention Network) 구조 및 설명](https://untitledtblog.tistory.com/174)
 
-[[머신 러닝/딥 러닝] 그래프 어텐션 네트워크 (Graph Attention Network) 구조 및 설명](https://untitledtblog.tistory.com/174)
+[4] [Graph Attention Networks (Pytorch)](https://chioni.github.io/posts/gat/)
 
-[4]
-
-[Graph Attention Networks (Pytorch)](https://chioni.github.io/posts/gat/)
-
-[5]
-
-[고려대학교 DMQA 연구실](http://dmqm.korea.ac.kr/activity/seminar/296)
+[5] [고려대학교 DMQA 연구실](http://dmqm.korea.ac.kr/activity/seminar/296)

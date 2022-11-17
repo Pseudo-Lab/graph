@@ -51,7 +51,7 @@ date: 2022-04-12
 # 첫번째 아이디어 : Phrase 기반 학습
 > 빈번하게 함께 등장하지만 다른 문맥에서는 드물게 함께 등장하는 단어들의 phrase를 unique token으로 설정하자
 
-<img src="/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_01.png">
+<img src="/graph/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_01.png">
 
 예를 들어, ‘New York’과 ‘Times’ 은 다른 문맥에서는 함께 잘 등장하지 않지만 ‘New York Times’라는 phrase로는 잘 등장합니다. 이를 바탕으로 score 함수를 다음과 같이 작성합니다.
 
@@ -61,7 +61,7 @@ $$\text{score}(w_i, w_j)=\frac{\text{count}(w_i, w_j)-\delta}{\text{count}(w_i)\
 
 이렇게 계산된 score가 일정 threshold를 넘는 phrase들만 학습에 사용하는데요, 학습에 실제 사용된 phrase의 조합들은 [링크](https://code.google.com/archive/p/word2vec/source/default/source) 에서 확인할 수 있습니다.
 
-<img src="/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_02.png">
+<img src="/graph/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_02.png">
 
 이렇게 단어 기반이 아니라 관용구들을 이용한 phrase 기반 학습을 진행하면 representation quality를 더 높일 수 있다고 합니다.
 
@@ -76,7 +76,7 @@ $$
 - $c$ : Window size, target word 주위 몇 개의 단어를 context word로 포함할 것인지 범위를 지정하는 역할
 - $T$ : 분석하고자 하는 문장(sequence)의 길이
 
-<img src="/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_03.png">
+<img src="/graph/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_03.png">
 
 Skip-gram 이전에 등장했던 CBOW는 왼쪽처럼 context 단어들이 주어졌을 때 target 단어를 잘 예측하는 task를 수행했습니다. 하지만 Skip-gram은 반대의 task를 수행하는데요, 'target 단어가 주어졌을 때 context 단어들을 잘 예측하기'를 수행합니다.
 
@@ -102,7 +102,7 @@ $$P(W_O|W_I)=\frac{\exp({V'_{w_O}}^TV_{w_I})}{\sum_{w=1}^W\exp({V'_w}^TV_{w_I})}
 
 이 방식은 objective function을 optimize하기 위해서 $\nabla \log P(W_O|W_I)$를 사용합니다. 그런데 이것의 분모를 계산하기 위해서 많은 연산량이 든다는 한계가 생기게 됩니다.
 
-<img src="/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_04.png">
+<img src="/graph/files/posts/Translating-Embeddings-for-Modeling-Multi-relational-Data/fig_04.png">
 
 이를 극복하기 위해 등장한 것이 hierarchical softmax인데요, 예를 들어 target word가 $w_2$라고 하면 출발지점(root)에서 target word까지 닿는 데 만나는 모든 node들을 내적합니다.
 

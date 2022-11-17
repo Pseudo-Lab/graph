@@ -215,6 +215,7 @@ date: 2022-07-25 04:30
     - 9개의 그래프 분류 벤치마크 사용
         - 4개의 생물정보학 데이터세트 : MUTAG, PTC, NCI1, PROTEINS
         - 5개의 소셜 네트워크 데이터세트 :COLLAB, IMDB-BINARY, IMDB-MULTI, REDDIT-BINARY 및 REDDIT-MULTI5K
+
 ### 모델 및 구성
 
 - GIN과 GNN 변형을 평가
