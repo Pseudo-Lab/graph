@@ -26,15 +26,15 @@ gems:
   - jekyll-paginate
 
 paginate: 5
-paginate_path: '/graph/page/:num/'
+paginate_path: '/page/:num/'
 
 collections:
   authors:
     output: true
-    permalink: "/graph/authors/:path/"
+    permalink: "/authors/:path/"
   tags:
     output: true
-    permalink: "/graph/tags/:path/"
+    permalink: "/tags/:path/"
 
 defaults:
   - scope:
