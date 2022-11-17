@@ -2,13 +2,13 @@ title: 블로그
 email: etckoko@gmail.com
 description: |
   Connect Everything 새로운 연결, 새로운 세상.
-baseurl: 'graph'
-url: 'https://pseudo-lab.github.io'
+baseurl: ''
+url: 'https://pseudo-lab.github.io/graph'
 timezone: Asia/Seoul
 
 repository: pseudo-lab/graph
 
-permalink: /blog/:title/
+permalink: "/blog/:title/"
 
 excerpt_separator: <!--more-->
 
@@ -26,15 +26,15 @@ gems:
   - jekyll-paginate
 
 paginate: 5
-paginate_path: '/page/:num/'
+paginate_path: '/graph/page/:num/'
 
 collections:
   authors:
     output: true
-    permalink: /authors/:path/
+    permalink: "/graph/authors/:path/"
   tags:
     output: true
-    permalink: /tags/:path/
+    permalink: "/graph/tags/:path/"
 
 defaults:
   - scope:
@@ -54,8 +54,8 @@ keep_files: [assets, files]
 
 # iolo's custom
 author: opensource@kakaocorp.com
-image: '/assets/images/default_blog_cover.jpg'
-asset_url: /assets
+image: '/graph/assets/images/default_blog_cover.jpg'
+asset_url: "/graph/assets"
 
 # google_analytics:
 #   ua: 'UA-72007721-1'
