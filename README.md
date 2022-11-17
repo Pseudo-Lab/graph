@@ -1,4 +1,4 @@
-# Team GrGr 블로그
+# 가짜연구소 그래프 블로그
 
 > 주의: [Collaborating on projects using issues and pull requests](https://help.github.com/categories/collaborating-on-projects-using-issues-and-pull-requests/)을 정독할 것.
 
@@ -84,10 +84,6 @@
 1. 글에서 사용할 이미지는 `/files/posts/{논문-제목}/` 디렉토리에 넣어서, 사용
 1. 처음 글을 쓰는 필자이라면 **글쓴이 등록** (필수)
 1. 유력한(?) 태그가 새로 등장했다면 **태그 등록** (선택)
-
-<br>
-
----
 
 <br>
 
