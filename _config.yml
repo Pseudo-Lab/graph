@@ -54,8 +54,8 @@ keep_files: [assets, files]
 
 # iolo's custom
 author: opensource@kakaocorp.com
-image: '/assets/images/default_blog_cover.jpg'
-asset_url: /assets
+image: 'assets/images/default_blog_cover.jpg'
+asset_url: assets
 
 # google_analytics:
 #   ua: 'UA-72007721-1'
