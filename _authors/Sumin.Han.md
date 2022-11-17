@@ -1,5 +1,5 @@
 ---
 name: Sumin.Han
 title: 한수민
-image: /files/authors/Sumin.Han.jpeg
+image: /graph/files/authors/Sumin.Han.jpeg
 ---
