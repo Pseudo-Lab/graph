@@ -3,11 +3,19 @@ email: etckoko@gmail.com
 description: |
   Connect Everything 새로운 연결, 새로운 세상.
 <<<<<<< HEAD
+<<<<<<< HEAD
 baseur: ''
 url: 'https://pseudo-lab.github.io/'
 timezone: Asia/Seoul
 
 repository: Pseudo-Lab/teamgrgr
+=======
+baseurl: ''
+url: 'https://teamgrgr.github.io'
+timezone: Asia/Seoul
+
+repository: teamgrgr/teamgrgr.github.io
+>>>>>>> parent of 73306ee (Update _config.yml)
 =======
 baseurl: ''
 url: 'https://teamgrgr.github.io'
