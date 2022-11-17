@@ -2,8 +2,8 @@ title: GrGr 블로그
 email: suojoah@gmail.com
 description: |
   Connect Everything 새로운 연결, 새로운 세상.
-baseur: 'https://pseudo-lab.github.io/teamgrgr'
-url: ''
+baseur: ''
+url: 'https://pseudo-lab.github.io/teamgrgr'
 timezone: Asia/Seoul
 
 repository: Pseudo-Lab/teamgrgr
@@ -55,7 +55,7 @@ keep_files: [assets, files]
 # iolo's custom
 author: opensource@kakaocorp.com
 image: '/assets/images/default_blog_cover.jpg'
-asset_url: teamgrgr/assets
+asset_url: assets
 
 # google_analytics:
 #   ua: 'UA-72007721-1'
