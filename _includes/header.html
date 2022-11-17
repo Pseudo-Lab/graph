@@ -5,7 +5,7 @@
     <button id="search-toggle" type="button">
         <span class="sr-only">Toggle Search Form</span>
     </button>
-    <a id="logo" href="/">
+    <a id="logo" href="{{ site.url }}">
         <span class="sr-only">Groovy Graph</span>
     </a>
 
@@ -15,9 +15,9 @@
     <ul id="results-container" class="search_results"></ul>
 
     <ul id="menu" class="nav">
-        <li class="{% if page.url == '/about/' %} active {% endif %}"><a href="{{ base_path }}/about/">About</a></li>
-        <li class="{% if page.url == '/team/' %} active {% endif %}"><a href="{{ base_path }}/team/">Team</a></li>
-        <li class="{% if page.url != '/about/' and page.url != '/team/' %} active {% endif %}"><a href="{{ base_path }}/">블로그</a></li>
+        <li class="{% if page.url == '/about/' %} active {% endif %}"><a href="{{ site.url }}/about/">About</a></li>
+        <li class="{% if page.url == '/team/' %} active {% endif %}"><a href="{{ site.url }}/team/">Team</a></li>
+        <li class="{% if page.url != '/about/' and page.url != '/team/' %} active {% endif %}"><a href="{{ site.url }}/">블로그</a></li>
     </ul>
 </div>
 
